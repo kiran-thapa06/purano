@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Announcements</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #f4f4f9, #e0e4e9);
+            color: #333;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 20px;
+            animation: fadeInDown 1s ease-in-out;
+        }
+
+        .announcement-section {
+            background: #fff3e0;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border: 2px solid #ffcc80;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .announcement-content {
+            font-size: 1.1em;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .announcement-image {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .announcement-time {
+            font-size: 0.9em;
+            color: #888;
+            text-align: right;
+        }
+
+        .announcement-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .announcement-actions button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.3s ease;
+        }
+
+        .edit-button {
+            background-color: #558154;
+            color: #fff;
+        }
+
+        .edit-button:hover {
+            background-color: #446a44;
+        }
+
+        .delete-button {
+            background-color: #ff6b6b;
+            color: #fff;
+        }
+
+        .delete-button:hover {
+            background-color: #ff4c4c;
+        }
+
+        .post-announcement-form {
+            background: #f7f9fc;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #e1e4e8;
+        }
+
+        .post-announcement-form textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-family: 'Poppins', sans-serif;
+            resize: vertical;
+            transition: border-color 0.3s ease;
+        }
+
+        .post-announcement-form textarea:focus {
+            border-color: #558154;
+            outline: none;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .file-input-label {
+            display: inline-block;
+            padding: 10px 15px;
+            background: #e9ecef;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .file-input-label:hover {
+            background: #dde1e6;
+        }
+
+        .file-input-wrapper input[type="file"] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .selected-file-name {
+            margin-left: 10px;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .preview-image {
+            max-width: 100px;
+            border-radius: 8px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .post-announcement-form button {
+            background-color: #558154;
+            color: #fff;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .post-announcement-form button:hover {
+            background-color: #446a44;
+            transform: translateY(-3px);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Announcements</h1>
+
+    <!-- Announcement Form (Visible only to Teachers) -->
+    <div id="announcementForm" class="post-announcement-form" style="display: none;">
+        <textarea id="announcementInput" placeholder="Enter your announcement..."></textarea>
+        <div class="file-input-wrapper">
+            <label for="imageUpload" class="file-input-label">
+                <i class="fa fa-image"></i> Add Image
+            </label>
+            <input type="file" id="imageUpload" accept="image/*" onchange="previewImage(this)">
+            <span id="selectedFileName" class="selected-file-name"></span>
+            <img id="imagePreview" class="preview-image">
+        </div>
+        <button onclick="postAnnouncement()">Post Announcement</button>
+    </div>
+
+    <!-- Announcement List -->
+    <div id="announcementList"></div>
+
+    <script>
+        const userRole = sessionStorage.getItem('userRole') || 'student';
+        const currentUser = sessionStorage.getItem('username') || 'Anonymous User';
+        let announcements = JSON.parse(localStorage.getItem('announcements')) || [];
+
+        // Show announcement form for teachers
+        if (userRole === 'teacher') {
+            document.getElementById('announcementForm').style.display = 'block';
+        }
+
+        // Preview selected image
+        function previewImage(input) {
+            const fileNameDisplay = document.getElementById('selectedFileName');
+            const imagePreview = document.getElementById('imagePreview');
+
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    // Display the selected file name
+                    fileNameDisplay.textContent = input.files[0].name;
+
+                    // Display the image preview
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                // Clear the file name and hide the preview if no file is selected
+                fileNameDisplay.textContent = '';
+                imagePreview.style.display = 'none';
+            }
+        }
+
+        // Render announcements
+        function renderAnnouncements() {
+            const announcementList = document.getElementById('announcementList');
+            announcementList.innerHTML = '';
+
+            if (announcements.length === 0) {
+                announcementList.innerHTML = '<p>No announcements yet.</p>';
+                return;
+            }
+
+            announcements.forEach((announcement, index) => {
+                const announcementDiv = document.createElement('div');
+                announcementDiv.className = 'announcement-section';
+                announcementDiv.innerHTML = `
+                    <div class="announcement-content">${announcement.text}</div>
+                    ${announcement.image ? `<img src="${announcement.image}" alt="Announcement Image" class="announcement-image">` : ''}
+                    <div class="announcement-time">Posted on ${formatDate(announcement.timestamp)}</div>
+                `;
+
+                // Add edit and delete buttons for teachers
+                if (userRole === 'teacher') {
+                    const actionsDiv = document.createElement('div');
+                    actionsDiv.className = 'announcement-actions';
+                    actionsDiv.innerHTML = `
+                        <button class="edit-button" onclick="editAnnouncement(${index})">Edit</button>
+                        <button class="delete-button" onclick="deleteAnnouncement(${index})">Delete</button>
+                    `;
+                    announcementDiv.appendChild(actionsDiv);
+                }
+
+                announcementList.appendChild(announcementDiv);
+            });
+        }
+
+        // Post announcement
+        function postAnnouncement() {
+            const text = document.getElementById('announcementInput').value.trim();
+            const imageFile = document.getElementById('imageUpload').files[0];
+
+            if (!text && !imageFile) {
+                alert('Please enter an announcement or upload an image.');
+                return;
+            }
+
+            const newAnnouncement = {
+                id: Date.now(),
+                text: text,
+                image: null,
+                timestamp: Date.now()
+            };
+
+            if (imageFile) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    newAnnouncement.image = e.target.result;
+                    announcements.unshift(newAnnouncement);
+                    localStorage.setItem('announcements', JSON.stringify(announcements));
+                    renderAnnouncements();
+                    document.getElementById('announcementInput').value = '';
+                    document.getElementById('imageUpload').value = '';
+                    document.getElementById('selectedFileName').textContent = '';
+                    document.getElementById('imagePreview').style.display = 'none';
+                };
+                reader.readAsDataURL(imageFile);
+            } else {
+                announcements.unshift(newAnnouncement);
+                localStorage.setItem('announcements', JSON.stringify(announcements));
+                renderAnnouncements();
+                document.getElementById('announcementInput').value = '';
+            }
+        }
+
+        // Edit announcement
+        function editAnnouncement(index) {
+            const newText = prompt('Edit your announcement:', announcements[index].text);
+            if (newText !== null) {
+                announcements[index].text = newText;
+                localStorage.setItem('announcements', JSON.stringify(announcements));
+                renderAnnouncements();
+            }
+        }
+
+        // Delete announcement
+        function deleteAnnouncement(index) {
+            if (confirm('Are you sure you want to delete this announcement?')) {
+                announcements.splice(index, 1);
+                localStorage.setItem('announcements', JSON.stringify(announcements));
+                renderAnnouncements();
+            }
+        }
+
+        // Format date
+        function formatDate(timestamp) {
+            const date = new Date(timestamp);
+            return date.toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        // Initialize
+        renderAnnouncements();
+    </script>
+</body>
+</html>

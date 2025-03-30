@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Faculty Semesters</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            color: #333;
+            padding: 20px;
+        }
+
+        /* Header Styling */
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+            color: #558154;
+        }
+
+        /* Navigation Styling */
+        nav {
+            max-width: 1200px;
+            margin: 0 auto 20px;
+            text-align: center;
+        }
+
+        .nav-btn {
+            padding: 12px 24px;
+            background-color: #558154;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin: 0 10px;
+        }
+
+        .nav-btn:hover {
+            background-color: #446a44;
+            transform: translateY(-3px);
+        }
+
+        .nav-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Section Styling */
+        section {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #558154;
+            text-align: center;
+        }
+
+        /* Button Styling */
+        #semesterList, #subjectList {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .semester-btn, .subject-btn {
+            padding: 15px;
+            background-color: #558154;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .semester-btn:hover, .subject-btn:hover {
+            background-color: #446a44;
+            transform: translateY(-3px);
+        }
+
+        .semester-btn:active, .subject-btn:active {
+            transform: translateY(0);
+        }
+
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .semester-btn, .subject-btn, .nav-btn {
+                font-size: 1rem;
+                padding: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            h2 {
+                font-size: 1.3rem;
+            }
+
+            #semesterList, #subjectList {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-btn {
+                margin: 5px;
+                display: block;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>IT Faculty - Select a Semester</h1>
+
+    <!-- Navigation Section -->
+    <nav>
+        <a href="events.html" class="nav-btn">Events</a>
+    </nav>
+  
+    <!-- Semester Section -->
+    <section id="semesterSection">
+        <h2>Choose a Semester</h2>
+        <div id="semesterList">
+            <button class="semester-btn" data-semester="1">1st Semester</button>
+            <button class="semester-btn" data-semester="2">2nd Semester</button>
+            <button class="semester-btn" data-semester="3">3rd Semester</button>
+            <button class="semester-btn" data-semester="4">4th Semester</button>
+            <button class="semester-btn" data-semester="5">5th Semester</button>
+            <button class="semester-btn" data-semester="6">6th Semester</button>
+            <button class="semester-btn" data-semester="7">7th Semester</button>
+            <button class="semester-btn" data-semester="8">8th Semester</button>
+        </div>
+    </section>
+
+    <!-- Subject Section -->
+    <section id="subjectSection" style="display: none;">
+        <h2>Select a Subject</h2>
+        <div id="subjectList">
+            <!-- Subjects will be dynamically inserted here -->
+        </div>
+    </section>
+
+    <script>
+        // Define subjects for each semester
+        const subjectsBySemester = {
+            1: [
+                { name: "Mathematics I", page: "math.html" },
+                { name: "Programming Fundamentals", page: "prog-fund.html" },
+                { name: "Physics", page: "physics.html" }
+            ],
+            2: [
+                { name: "Mathematics II", page: "math2.html" },
+                { name: "Data Structures", page: "data-structures.html" },
+                { name: "Digital Logic", page: "digital-logic.html" }
+            ],
+            3: [
+                { name: "Algorithms", page: "algorithms.html" },
+                { name: "Database Systems", page: "database.html" },
+                { name: "Computer Networks", page: "networks.html" }
+            ],
+            4: [
+                { name: "Operating Systems", page: "os.html" },
+                { name: "Software Engineering", page: "software-eng.html" },
+                { name: "Web Development", page: "web-dev.html" }
+            ],
+            5: [
+                { name: "Artificial Intelligence", page: "ai.html" },
+                { name: "Machine Learning", page: "ml.html" },
+                { name: "Cloud Computing", page: "cloud.html" }
+            ],
+            6: [
+                { name: "Cybersecurity", page: "cybersecurity.html" },
+                { name: "Big Data", page: "big-data.html" },
+                { name: "Mobile App Development", page: "mobile-dev.html" }
+            ],
+            7: [
+                { name: "Data Science", page: "data-science.html" },
+                { name: "Blockchain", page: "blockchain.html" },
+                { name: "IoT", page: "iot.html" }
+            ],
+            8: [
+                { name: "Project Management", page: "project-mgmt.html" },
+                { name: "Ethical Hacking", page: "ethical-hacking.html" },
+                { name: "Advanced Algorithms", page: "advanced-algo.html" }
+            ]
+        };
+
+        // Function to display subjects for the selected semester
+        function showSubjects(semester) {
+            const subjectList = document.getElementById('subjectList');
+            subjectList.innerHTML = ''; // Clear previous subjects
+
+            // Add subjects for the selected semester
+            subjectsBySemester[semester].forEach(subject => {
+                const button = document.createElement('button');
+                button.className = 'subject-btn';
+                button.textContent = subject.name;
+                button.setAttribute('data-page', subject.page);
+                subjectList.appendChild(button);
+            });
+
+            // Show the subject section
+            document.getElementById('subjectSection').style.display = 'block';
+            window.scrollTo(0, document.body.scrollHeight); // Scroll to subject section
+        }
+
+        // Add event listeners to semester buttons
+        document.querySelectorAll('.semester-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const semester = this.getAttribute('data-semester');
+                showSubjects(semester);
+            });
+        });
+
+        // Add event listeners to subject buttons (dynamic)
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('subject-btn')) {
+                const page = event.target.getAttribute('data-page');
+                window.location.href = page;
+            }
+        });
+    </script>
+
+</body>
+</html>

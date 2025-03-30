@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Preparation Tips</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #2b2d42;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align content to the top */
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .exam-tips-container {
+            width: 100%;
+            min-height: 100vh; /* Ensure container takes at least the full viewport height */
+            background-color: #2b2d42;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+            padding: 20px; /* Add padding for better spacing */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Star decorations */
+        .star {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.2);
+            font-size: 20px;
+            animation: twinkle 3s infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 0.8; }
+        }
+
+        .star-1 {
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .star-2 {
+            top: 20%;
+            right: 10%;
+            animation-delay: 0.5s;
+        }
+
+        .star-3 {
+            bottom: 30%;
+            left: 20%;
+            animation-delay: 1s;
+        }
+
+        .star-4 {
+            bottom: 20%;
+            right: 30%;
+            animation-delay: 1.5s;
+        }
+        
+        .star-5 {
+            bottom: 60%;
+            left: 40%;
+            animation-delay: 2s;
+        }
+
+        /* Header section */
+        .header-section {
+            display: flex;
+            align-items: center;
+            padding: 50px 20px;
+            position: relative;
+            animation: slideDown 0.8s ease forwards;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .person-container {
+            width: 120px;
+            height: 120px;
+            margin-right: 20px;
+            flex-shrink: 0;
+            transform: scale(0);
+            animation: popIn 0.6s 0.8s ease forwards;
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0); }
+            to { transform: scale(1); }
+        }
+
+        .person-illustration {
+            width: 100%;
+            height: 100%;
+        }
+
+        .title-container {
+            background-color: rgba(75, 80, 112, 0.7);
+            padding: 20px;
+            border-radius: 15px;
+            flex-grow: 1;
+            transform: translateX(100px);
+            opacity: 0;
+            animation: slideIn 0.8s 0.4s ease forwards;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .title-container h1 {
+            color: #ffd60a;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+            line-height: 1.3;
+        }
+
+        /* Tips section */
+        .tips-section {
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .tip-item {
+            flex: 1 1 45%;
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Staggered animation delays for tips */
+        .tip-item:nth-child(1) { animation-delay: 1.0s; }
+        .tip-item:nth-child(2) { animation-delay: 1.2s; }
+        .tip-item:nth-child(3) { animation-delay: 1.4s; }
+        .tip-item:nth-child(4) { animation-delay: 1.6s; }
+
+        .tip-icon {
+            flex: 0 0 80px;
+            margin-right: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .tip-item:hover .tip-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .tip-content {
+            flex: 1;
+        }
+
+        .tip-content h2 {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            transition: color 0.3s ease;
+        }
+
+        .tip-item:hover .tip-content h2 {
+            color: #ffd60a;
+        }
+
+        .tip-content p {
+            color: #e9ecef;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            transition: opacity 0.3s ease;
+        }
+
+        .tip-item:hover .tip-content p {
+            opacity: 1;
+        }
+
+        /* Footer section */
+        .footer-section {
+            padding: 20px;
+            text-align: center;
+            background-color: rgba(75, 80, 112, 0.7);
+            position: relative;
+            transform: translateY(100%);
+            animation: slideUpFooter 0.5s 2s ease forwards;
+        }
+
+        @keyframes slideUpFooter {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        .footer-section p {
+            color: #e9ecef;
+            font-size: 0.9rem;
+        }
+
+        /* SVG icons */
+        .icon-svg {
+            width: 100%;
+            height: auto;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .header-section {
+                flex-direction: column;
+                text-align: center;
+                padding: 30px 20px;
+            }
+            
+            .person-container {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+            
+            .title-container h1 {
+                font-size: 1.3rem;
+            }
+
+            .tips-section {
+                flex-direction: column;
+                padding: 20px;
+            }
+
+            .tip-item {
+                flex: 1 1 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .title-container h1 {
+                font-size: 1.1rem;
+            }
+
+            .tip-content h2 {
+                font-size: 1rem;
+            }
+
+            .tip-content p {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="exam-tips-container">
+        <!-- Star decorations -->
+        <div class="star star-1">★</div>
+        <div class="star star-2">★</div>
+        <div class="star star-3">★</div>
+        <div class="star star-4">★</div>
+        <div class="star star-5">★</div>
+        
+        <!-- Header section -->
+        <div class="header-section">
+            <div class="person-container">
+                <svg class="person-illustration" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Person with thumbs up illustration -->
+                    <circle cx="50" cy="30" r="20" fill="#ffcba4"/>
+                    <rect x="30" y="50" width="40" height="45" rx="5" fill="#f8f9fa"/>
+                    <path d="M45 30 Q50 20 55 30" stroke="#000" fill="none" stroke-width="1"/>
+                    <circle cx="40" cy="25" r="3" fill="#fff"/>
+                    <circle cx="40" cy="25" r="1" fill="#000"/>
+                    <circle cx="60" cy="25" r="3" fill="#fff"/>
+                    <circle cx="60" cy="25" r="1" fill="#000"/>
+                    <path d="M45 38 Q50 42 55 38" stroke="#000" fill="none" stroke-width="1"/>
+                    <rect x="70" y="20" width="15" height="20" fill="#fff" stroke="#000" stroke-width="1"/>
+                    <line x1="73" y1="25" x2="82" y2="25" stroke="#000" stroke-width="1"/>
+                    <line x1="73" y1="30" x2="82" y2="30" stroke="#000" stroke-width="1"/>
+                    <line x1="73" y1="35" x2="82" y2="35" stroke="#000" stroke-width="1"/>
+                    <!-- Glasses -->
+                    <circle cx="40" cy="25" r="8" fill="none" stroke="#ff6b6b" stroke-width="1.5"/>
+                    <circle cx="60" cy="25" r="8" fill="none" stroke="#ff6b6b" stroke-width="1.5"/>
+                    <line x1="48" y1="25" x2="52" y2="25" stroke="#ff6b6b" stroke-width="1.5"/>
+                    <!-- Thumbs up -->
+                    <path d="M20 55 Q15 45 25 40 L25 60 L20 60 Z" fill="#ffcba4"/>
+                </svg>
+            </div>
+            <div class="title-container">
+                <h1>5 EXAM PREPARATION TIPS TO HELP YOU ACE YOUR TEST</h1>
+            </div>
+        </div>
+        
+        <!-- Tips section -->
+        <div class="tips-section">
+            <!-- Tip 1 -->
+            <div class="tip-item">
+                <div class="tip-icon">
+                    <svg class="icon-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Clock Icon -->
+                        <circle cx="50" cy="50" r="40" fill="#ffd60a" stroke="#fff" stroke-width="2"/>
+                        <circle cx="50" cy="50" r="35" fill="#ffd60a"/>
+                        <circle cx="50" cy="50" r="3" fill="#fff"/>
+                        <line x1="50" y1="50" x2="50" y2="25" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+                        <line x1="50" y1="50" x2="70" y2="50" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div class="tip-content">
+                    <h2>START STUDYING EARLY</h2>
+                    <p>The best way to ace your exams is to start studying for them as soon as you can.</p>
+                </div>
+            </div>
+            
+            <!-- Tip 2 -->
+            <div class="tip-item">
+                <div class="tip-icon">
+                    <svg class="icon-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Calendar Icon -->
+                        <rect x="10" y="20" width="80" height="70" fill="#fff" stroke="#fff" stroke-width="2"/>
+                        <rect x="15" y="25" width="70" height="60" fill="#3a86ff"/>
+                        <line x1="15" y1="40" x2="85" y2="40" stroke="#fff" stroke-width="2"/>
+                        <!-- Calendar days -->
+                        <rect x="25" y="45" width="10" height="10" fill="#fff"/>
+                        <rect x="45" y="45" width="10" height="10" fill="#fff"/>
+                        <rect x="65" y="45" width="10" height="10" fill="#fff"/>
+                        <rect x="25" y="65" width="10" height="10" fill="#fff"/>
+                        <rect x="45" y="65" width="10" height="10" fill="#fff"/>
+                        <rect x="65" y="65" width="10" height="10" fill="#fff"/>
+                    </svg>
+                </div>
+                <div class="tip-content">
+                    <h2>CREATE A STUDY PLAN</h2>
+                    <p>Make sure you have a plan for how you'll approach your studies.</p>
+                </div>
+            </div>
+            
+            <!-- Tip 3 -->
+            <div class="tip-item">
+                <div class="tip-icon">
+                    <svg class="icon-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Books Icon -->
+                        <rect x="15" y="20" width="65" height="65" rx="3" fill="#ffd60a" transform="rotate(-5, 50, 50)"/>
+                        <rect x="20" y="25" width="60" height="60" rx="3" fill="#3a86ff" transform="rotate(5, 50, 50)"/>
+                        <rect x="25" y="30" width="55" height="55" rx="3" fill="#ffd60a" transform="rotate(-5, 50, 50)"/>
+                    </svg>
+                </div>
+                <div class="tip-content">
+                    <h2>PRACTICE, PRACTICE</h2>
+                    <p>Take frequent breaks while studying to keep your mind fresh.</p>
+                </div>
+            </div>
+            
+            <!-- Tip 4 -->
+            <div class="tip-item">
+                <div class="tip-icon">
+                    <svg class="icon-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Sleep Icon -->
+                        <circle cx="50" cy="50" r="40" fill="#ffd60a" stroke="#fff" stroke-width="2"/>
+                        <circle cx="50" cy="50" r="35" fill="#ffd60a"/>
+                        <circle cx="50" cy="50" r="3" fill="#fff"/>
+                        <path d="M30 50 Q40 40 50 50 T70 50" stroke="#fff" stroke-width="3" fill="none"/>
+                        <path d="M30 60 Q40 50 50 60 T70 60" stroke="#fff" stroke-width="3" fill="none"/>
+                    </svg>
+                </div>
+                <div class="tip-content">
+                    <h2>GET ENOUGH SLEEP</h2>
+                    <p>Ensure you get enough rest to keep your mind sharp.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer section -->
+        <div class="footer-section">
+            <p>© 2023 Exam Prep Tips. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

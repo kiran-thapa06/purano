@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- AOS Library -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        
+        .exam-tips-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: navy;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .exam-tips-button:hover {
+            background: white;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.6);
+            color: blue;
+        }
+
+        .exam-tips-button:active {
+            transform: translateY(0);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        /* Testimonial Section Styles */
+        .testimonial-section {
+            padding: 60px 0;
+            background-color: whitesmoke;
+            text-align: center;
+        }
+
+        .testimonial-section .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .testimonial-section h2 {
+            margin-bottom: 40px;
+            font-size: 32px;
+            color: #333;
+        }
+
+        .testimonial-slider {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .testimonial-container {
+            display: flex;
+            transition: transform 0.5s ease;
+            width: 300%;
+        }
+
+        .testimonial-item {
+            min-width: 33.33%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .testimonial-item i {
+            font-size: 36px;
+            color: #ffa500;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .testimonial-item h4 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            font-weight: 500;
+            color: #333;
+            font-family: 'Lora', serif;
+        }
+
+        .testimonial-item span {
+            color: #666;
+            font-size: 14px;
+            display: block;
+            font-style: italic;
+        }
+
+        /* Slider Dots */
+        .slider-dots {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .dot {
+            cursor: pointer;
+            height: 12px;
+            width: 12px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: all 0.5s ease;
+        }
+
+        .dot.active {
+            background-color: #ffa500;
+        }
+
+
+
+
+
+        main {
+            flex: 1;
+        }
+        .main-footer {
+            background: #1a1a2e;
+            color: white;
+            padding: 80px 0 30px;
+            margin-top: 50px;
+            width: 110%;
+        }
+        .footer-content {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            padding: 0 20px;
+        }
+        .footer-section h3 {
+            color: #4CAF50;
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #4CAF50;
+        }
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        .footer-links a {
+            color:#ddd;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .footer-links a:hover {
+            color:#4CAF50;
+        }
+        .footer-bottom {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+ 
+        .social-links-footer {
+    display: flex;
+    gap: 1rem;
+    color:blue;
+    margin-top: 2rem;
+}
+
+.social-links-footer a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color:white;  
+    color: var(--primary-color); 
+    text-decoration: none;
+    transition: all var(--transition-time);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Added subtle shadow */
+}
+
+.social-links-footer a:hover {
+    
+    background-color:blueviolet; /* Keep white background on hover */
+    color:white; /* Change icon color on hover (matches footer accents) */
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Enhanced shadow on hover */
+}
+       
+        @media (max-width: 992px) {
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 576px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+
+        
+
+
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <div class="navigation">
+        <ul>
+            <li class="list active">
+                <a href="index.html">
+                    <span class="icon">
+                        <ion-icon name="home-outline"></ion-icon>
+                    </span>
+                    <span class="text">Home</span>
+                </a>
+            </li>
+            <li class="list">
+                <a href="#">
+                    <span class="icon">
+                        <ion-icon name="book-outline"></ion-icon>
+                    </span>
+                    <span class="text">About us</span>
+                </a>
+            </li>
+            <li class="list">
+                <a href="#">
+                    <span class="icon">
+                        <ion-icon name="chatbox-ellipses-outline"></ion-icon>
+                    </span>
+                    <span class="text">Contact</span>
+                </a>
+            </li>
+            <div class="indicator"></div>
+        </ul>
+    </div>
+
+    <!-- Shadow Container -->
+    <div class="shadow-container" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="500">
+        <div class="shadow-text">"Shine bright, answer right. You're ready for this!"</div>
+    </div>
+
+    <!-- Home Section -->
+    <div id="homesection" class="home-section" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="500">
+        <div class="text-content">
+            <h1>Welcome to the Past!</h1>
+            <p>We're excited to have you here as you take the next step toward academic success. 
+                Our platform is designed to help students like you access past exam questions tailored to your university. 
+                <br>Simply choose your institution, enter your pass key, and unlock a wealth of resources to help you prepare effectively. We've made it easy for you to study smarter and boost your confidence for upcoming exams. Wishing you all the best as you work toward your goals you've got this! Let's make your academic journey a successful one.
+            </p>
+        </div>
+        
+        <!-- Kids with Book Image -->
+        <div class="image-boxx" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="500">
+            <img src="image/kidswithBBook.jpg" alt="Kids with BB Book">
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="features-section" data-aos="fade-up" data-aos-duration="1000">
+        <h2 class="features-heading">Why Choose Us?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <ion-icon name="library-outline" class="feature-icon"></ion-icon>
+                <h3 class="feature-title">Extensive Question Bank</h3>
+                <p class="feature-description">Access thousands of past exam questions from top institutions.</p>
+            </div>
+            <div class="feature-card">
+                <ion-icon name="lock-closed-outline" class="feature-icon"></ion-icon>
+                <h3 class="feature-title">Secure Access</h3>
+                <p class="feature-description">Your data is safe with our secure login system.</p>
+            </div>
+            <div class="feature-card">
+                <ion-icon name="school-outline" class="feature-icon"></ion-icon>
+                <h3 class="feature-title">Tailored Resources</h3>
+                <p class="feature-description">Get resources specific to your school or university.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Testimonial Section -->
+    <section class="testimonial-section" data-aos="fade-up" data-aos-duration="1000">
+        <div class="container">
+            <h2 data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">Fuel Your Ambition</h2>
+            
+            <div class="testimonial-slider" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
+                <div class="testimonial-container">
+                    <div class="testimonial-item" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="600">
+                        <i class="fas fa-quote-left"></i>
+                        <h4>"Success is where preparation and opportunity meet." </h4>
+                        <span>Bobby Unser</span>
+                    </div>
+                    
+                    <div class="testimonial-item" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="800">
+                        <i class="fas fa-quote-left"></i>
+                        <h4>"The best way to predict your future is to create it." </h4>
+                        <span>Abraham Lincoln</span>
+                    </div>
+                    
+                    <div class="testimonial-item" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="1000">
+                        <i class="fas fa-quote-left"></i>
+                        <h4>"Don’t watch the clock; do what it does. Keep going." </h4>
+                        <span>Sam Levenson</span>
+                    </div>
+                </div>
+                
+                <div class="slider-dots">
+                    <span class="dot active" data-index="0"></span>
+                    <span class="dot" data-index="1"></span>
+                    <span class="dot" data-index="2"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- College Selection Section -->
+    <div class="main-container">
+        <div class="image-college" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="100">
+            <div class="text-container">
+                <div class="content-container">
+                    <h2 class="cursive-heading">Select your <span class="highlight">COLLEGES</span></h2>
+                    <div class="search-container">
+                        <input type="text" id="collegeSearch" placeholder="Search for your college..." />
+                        <button id="goBackButton" style="display: none;">Go Back</button>
+                    </div>
+                    <div id="searchResult"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- College Grid -->
+        <div class="image-container" data-aos="zoom-in" data-aos-duration="1000" data-aos-delay="100">
+            <figure class="image-box" data-college="HAW">
+                <img src="./image/uni.png" class="clickable-image" data-id="1" alt="HAW">
+                <figcaption>HAW</figcaption>
+            </figure>
+            <figure class="image-box" data-college="Hamburg university">
+                <img src="./image/uni.png" class="clickable-image" data-id="2" alt="Hamburg university">
+                <figcaption>Hamburg university</figcaption>
+            </figure>
+            <figure class="image-box" data-college="Berlin university">
+                <img src="./image/uni.png" class="clickable-image" data-id="3" alt="Berlin university">
+                <figcaption>Berlin university</figcaption>
+            </figure>
+            <figure class="image-box" data-college="Laligurans school">
+                <img src="./image/uni.png" class="clickable-image" data-id="4" alt="Laligurans school">
+                <figcaption>Laligurans school</figcaption>
+            </figure>
+            <figure class="image-box" data-college="Satyawati secondary school">
+                <img src="./image/uni.png" class="clickable-image" data-id="5" alt="Satyawati secondary school">
+                <figcaption>Satyawati secondary school</figcaption>
+            </figure>
+        </div>
+    </div>
+
+    <!-- Hidden Login Block -->
+    <div class="login-block" id="loginBlock">
+        <h2>Login</h2>
+        <p>Select your role:</p>
+        <button class="role-btn" onclick="authenticate('student')">👨‍🎓 Student Login</button>
+        <button class="role-btn" onclick="authenticate('teacher')">👨‍🏫 Teacher Login</button>
+        <input type="password" id="passKey" placeholder="Enter pass key">
+        <button onclick="validatePass()">Submit</button>
+        <button class="close-btn" onclick="closeLogin()">Close</button>
+        <p id="errorMsg"></p>
+    </div>
+
+
+    <footer class="main-footer" data-aos="fade-up" data-aos-duration="1000">
+        <div class="footer-wave"></div>
+        <div class="footer-content">
+            <div class="footer-section" data-aos="fade-right" data-aos-delay="200">
+                <h3>Company</h3>
+                <ul class="footer-links">
+                    
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="team.html">Our Team</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section" data-aos="fade-right" data-aos-delay="300">
+                <h3>Services</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Web Design</a></li>
+                    <li><a href="#">Marketing</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section" data-aos="fade-right" data-aos-delay="400">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Tutorials</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section" data-aos="fade-right" data-aos-delay="500">
+                <h3>Newsletter</h3>
+                <div class="social-links-footer">
+                    <a href="https://www.facebook.com/kiran.thapa.77377692/"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/kiran_thapa.me/"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/kiran-thapa-342a60265/" ><i class="fab fa-linkedin-in"></i></a>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom" data-aos="fade-up" data-aos-delay="600">
+            <p>&copy; 2025 Old Exam Web. All rights reserved.</p>
+        </div>
+    </footer>
+
+
+
+    <!-- Exam Tips Button -->
+    <button class="exam-tips-button" onclick="window.location.href='examtips.html'">Exam Tips Click Here</button>
+
+
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000, 
+            once: true, 
+        });
+    </script>
+
+    <!-- Ion Icons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+
+    <script>  
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get elements
+            const container = document.querySelector('.testimonial-container');
+            const dots = document.querySelectorAll('.dot');
+            
+            // Variables
+            let currentIndex = 0;
+            const slideCount = dots.length;
+            const slideWidth = 100 / slideCount;
+            
+            // Initialize auto-sliding
+            let slideInterval = setInterval(nextSlide, 2000);
+            
+            // Function to move to next slide
+            function nextSlide() {
+                currentIndex = (currentIndex + 1) % slideCount;
+                updateSlider();
+            }
+            
+            // Update slider position and active dot
+            function updateSlider() {
+                container.style.transform = `translateX(-${currentIndex * slideWidth}%)`;
+                
+                // Update active dot
+                dots.forEach(dot => dot.classList.remove('active'));
+                dots[currentIndex].classList.add('active');
+            }
+            
+            // Add click event to dots
+            dots.forEach(dot => {
+                dot.addEventListener('click', function() {
+                    currentIndex = parseInt(this.getAttribute('data-index'));
+                    updateSlider();
+                    
+                    // Reset interval when manually clicked
+                    clearInterval(slideInterval);
+                    slideInterval = setInterval(nextSlide, 2000);
+                });
+            });
+            
+            // Pause on hover
+            container.addEventListener('mouseenter', function() {
+                clearInterval(slideInterval);
+            });
+            
+            container.addEventListener('mouseleave', function() {
+                slideInterval = setInterval(nextSlide, 2000);
+            });
+        });
+        </script>
+
+    <!-- Custom Scripts -->
+    <script src="script.js"></script>
+</body>
+</html>

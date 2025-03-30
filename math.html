@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mathematics</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+       /* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    background: linear-gradient(135deg, #f4f4f9, #e0e4e9);
+    color: #333;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+h1, h3 {
+    color: #444;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 20px;
+    animation: fadeInDown 1s ease-in-out;
+}
+
+h3 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+section {
+    background: #fff;
+    padding: 25px;
+    margin-bottom: 25px;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    animation: fadeInUp 1s ease-in-out;
+}
+
+form label, form input, form button {
+    display: block;
+    margin-bottom: 15px;
+}
+
+input[type="file"] {
+    padding: 12px;
+    width: 100%;
+    box-sizing: border-box;
+    border: 2px dashed #558154;
+    border-radius: 8px;
+    background: #f8f9fa;
+    transition: border-color 0.3s ease;
+}
+
+input[type="file"]:hover {
+    border-color: #446a44;
+}
+
+button {
+    background-color: #558154;
+    color: #fff;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+    background-color: #446a44;
+    transform: translateY(-3px);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    background: #eef;
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.file-actions button {
+    margin-left: 10px;
+    padding: 8px 16px;
+    font-size: 0.9em;
+    background-color: #ff6b6b;
+    transition: background-color 0.3s ease;
+}
+
+.file-actions button:hover {
+    background-color: #ff4c4c;
+}
+
+/* Discussion Section Styles */
+.discussion-section {
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.post-form {
+    background: #f7f9fc;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #e1e4e8;
+}
+
+.post-form textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-family: 'Poppins', sans-serif;
+    resize: vertical;
+    transition: border-color 0.3s ease;
+}
+
+.post-form textarea:focus {
+    border-color: #558154;
+    outline: none;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.file-input-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.file-input-label {
+    display: inline-block;
+    padding: 10px 15px;
+    background: #e9ecef;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.file-input-label:hover {
+    background: #dde1e6;
+}
+
+.file-input-wrapper input[type="file"] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.post-button {
+    background-color: #558154;
+    color: #fff;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.post-button:hover {
+    background-color: #446a44;
+    transform: translateY(-3px);
+}
+
+.discussion-item {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #e1e4e8;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.discussion-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    align-items: center;
+}
+
+.post-author {
+    font-weight: 600;
+    color: #444;
+}
+
+.post-time {
+    color: #888;
+    font-size: 0.9em;
+}
+
+.post-content {
+    margin-bottom: 15px;
+    word-wrap: break-word;
+}
+
+.post-content img {
+    max-width: 100%;
+    border-radius: 8px;
+    margin-top: 15px;
+    max-height: 400px;
+}
+
+.post-actions {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #e1e4e8;
+    padding-top: 15px;
+    margin-top: 15px;
+}
+
+.reaction-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.reaction-button {
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: #666;
+    cursor: pointer;
+    padding: 8px 16px;
+    border-radius: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.reaction-button:hover {
+    background-color: #f1f2f6;
+}
+
+.reaction-button.active {
+    color: #558154;
+    font-weight: 600;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.edit-button, .reply-button {
+    background: none;
+    border: none;
+    color: #558154;
+    cursor: pointer;
+    padding: 8px 16px;
+    border-radius: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.delete-button {
+    background: none;
+    border: none;
+    color: #ff6b6b;
+    cursor: pointer;
+    padding: 8px 16px;
+    border-radius: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.edit-button:hover, .reply-button:hover {
+    background-color: #eef;
+}
+
+.delete-button:hover {
+    background-color: #fee;
+}
+
+.reply-section {
+    margin-left: 30px;
+    margin-top: 15px;
+    border-left: 3px solid #e1e4e8;
+    padding-left: 15px;
+}
+
+.reply-form {
+    background: #f7f9fc;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    display: none;
+}
+
+.reply-item {
+    background: #f1f3f7;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 10px;
+    border: 1px solid #e8eaed;
+}
+
+.reply-content {
+    margin-bottom: 8px;
+}
+
+.reply-author {
+    font-weight: 600;
+    font-size: 0.9em;
+    color: #444;
+}
+
+.reply-time {
+    color: #888;
+    font-size: 0.8em;
+}
+
+.reply-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
+.preview-image {
+    max-height: 60px;
+    border-radius: 4px;
+    margin-left: 10px;
+}
+
+.selected-file-name {
+    margin-left: 10px;
+    font-size: 0.9em;
+    color: #666;
+}
+
+/* Animations */
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Modal Styles */
+.file-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 25px;
+    border-radius: 12px;
+    max-width: 90%;
+    max-height: 80%;
+    overflow: auto;
+    position: relative;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.close-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 10px 20px;
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.close-button:hover {
+    background-color: #ff4c4c;
+}
+
+.download-section {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.file-name {
+    cursor: pointer;
+    color: #558154;
+    text-decoration: underline;
+    transition: color 0.3s ease;
+}
+
+.file-name:hover {
+    color: #446a44;
+}
+
+.file-type-icon {
+    margin-right: 8px;
+    color: #558154;
+}
+.announcement-button {
+    position: fixed; /* Fixed position to keep it in place */
+    top: 20px; /* Distance from the top */
+    right: 20px; /* Distance from the right */
+    background-color: #e65100;
+    color: #fff;
+    padding: 10px 20px; /* Default padding */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em; /* Default font size */
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Ensure it stays on top of other elements */
+}
+
+.announcement-button:hover {
+    background-color: #bf360c;
+    transform: translateY(-3px);
+}
+
+.announcement-button:active {
+    transform: translateY(0);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .announcement-button {
+        padding: 8px 16px; 
+        font-size: 0.9em; 
+        top: 10px; 
+        right: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .announcement-button {
+        padding: 6px 12px; 
+        font-size: 0.8em; 
+        top: 5px; 
+        right: 10px;
+    }
+}    
+
+nav {
+  background-color: #4CAF50;
+  padding: 15px 25px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.nav-btn {
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  margin: 0 5px;
+  letter-spacing: 0.5px;
+}
+
+.nav-btn:hover {
+  background-color: rgb(255, 255, 255);
+  transform: translateY(-2px);
+  color:black;
+}
+
+.nav-btn:active {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(0);
+}
+
+
+@media (max-width: 768px) {
+  nav {
+    flex-direction: column;
+    padding: 10px 15px;
+  }
+  
+  .nav-btn {
+    margin: 5px 0;
+    width: 100%;
+    text-align: center;
+  }
+}
+
+</style>
+</head>
+<body>
+    <nav>
+        <a href="mathquize.html" class="nav-btn">Math Quiz</a>
+    </nav>
+    <!-- Announcement Button -->
+    <button class="announcement-button" onclick="window.location.href='announcement.html'">
+        <i class="fa fa-bullhorn"></i> Announcements
+    </button>
+
+    <h1>Mathematics Page</h1>
+    <p>Welcome to the Mathematics course content for this semester.</p>
+
+    <button onclick="window.open('stopwatch.html', '_blank')" style="padding: 12px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 1rem;">Start Solving by Clicking Here</button>
+    <!-- Teacher-only section -->
+    <section id="uploadSection">
+        <h3>Upload Exam Document</h3>
+        <form id="uploadForm">
+            <label for="fileUpload">Choose file:</label>
+            <input type="file" id="fileUpload" accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png" required>
+            <button type="submit">Upload</button>
+        </form>
+    </section>
+
+    <!-- File list for both teachers and students -->
+    <section id="fileList">
+        <h3>Uploaded Files</h3>
+        <ul id="filesContainer"></ul>
+    </section>
+
+    <!-- Updated Discussion section -->
+    <section class="discussion-section">
+        <h3>Discussion Forum</h3>
+        
+        <div class="post-form">
+            <textarea id="discussionInput" placeholder="Share your question, solution, or thoughts..."></textarea>
+            <div class="form-actions">
+                <div class="file-input-wrapper">
+                    <label for="imageUpload" class="file-input-label">
+                        <i class="fa fa-image"></i> Add Image
+                    </label>
+                    <input type="file" id="imageUpload" accept="image/*" onchange="previewImage(this)">
+                    <span id="selectedFileName" class="selected-file-name"></span>
+                    <img id="imagePreview" class="preview-image" style="display: none;">
+                </div>
+                <button class="post-button" onclick="addDiscussion()">Post Discussion</button>
+            </div>
+        </div>
+        
+        <div id="discussionContainer">
+            <!-- Discussion items will be rendered here -->
+        </div>
+    </section>
+
+    <script>
+
+        let files = JSON.parse(localStorage.getItem('files')) || [];
+        let discussions = JSON.parse(localStorage.getItem('discussions')) || [];
+        const userRole = sessionStorage.getItem('userRole') || 'student';
+        const currentUser = sessionStorage.getItem('username') || 'Anonymous User';
+
+        if (userRole !== 'teacher') {
+            document.getElementById('uploadSection').style.display = 'none';
+        }
+
+        // File management functions
+        function saveFiles() {
+            localStorage.setItem('files', JSON.stringify(files));
+        }
+
+        function renderFileList() {
+            const filesContainer = document.getElementById('filesContainer');
+            filesContainer.innerHTML = '';
+            
+            if (files.length === 0) {
+                filesContainer.innerHTML = '<p>No files uploaded yet.</p>';
+                return;
+            }
+            
+            files.forEach((file, index) => {
+                const li = document.createElement('li');
+                
+                // Add appropriate icon based on file type
+                const fileType = determineFileType(file);
+                let iconClass = 'fa-file';
+                
+                if (fileType === 'image') {
+                    iconClass = 'fa-file-image';
+                } else if (fileType === 'pdf') {
+                    iconClass = 'fa-file-pdf';
+                } else if (fileType === 'text') {
+                    iconClass = 'fa-file-alt';
+                }
+                
+                // Create file name display with icon
+                const fileIcon = document.createElement('i');
+                fileIcon.className = `fa-solid ${iconClass} file-type-icon`;
+                li.appendChild(fileIcon);
+                
+                const fileNameSpan = document.createElement('span');
+                fileNameSpan.textContent = file.name;
+                fileNameSpan.className = 'file-name';
+                fileNameSpan.onclick = () => displayFile(file);
+                
+                li.appendChild(fileNameSpan);
+
+                if (userRole === 'teacher') {
+                    const actionsDiv = document.createElement('div');
+                    actionsDiv.className = 'file-actions';
+                    
+                    const deleteButton = document.createElement('button');
+                    deleteButton.innerHTML = '<i class="fa-solid fa-trash"></i> Delete';
+                    deleteButton.onclick = () => deleteFile(index);
+                    
+                    actionsDiv.appendChild(deleteButton);
+                    li.appendChild(actionsDiv);
+                }
+                
+                filesContainer.appendChild(li);
+            });
+        }
+
+        function deleteFile(index) {
+            if (confirm('Are you sure you want to delete this file?')) {
+                files.splice(index, 1);
+                saveFiles();
+                renderFileList();
+            }
+        }
+
+        function displayFile(file) {
+            // Determine file type from the data URL or name
+            const fileType = determineFileType(file);
+            
+            // Create a modal to display the file
+            const modal = document.createElement('div');
+            modal.className = 'file-modal fade-in';
+            
+            // Create the modal content container
+            const contentContainer = document.createElement('div');
+            contentContainer.className = 'modal-content';
+            
+            // Add file name header
+            const fileHeader = document.createElement('h3');
+            fileHeader.textContent = file.name;
+            fileHeader.style.marginTop = '0';
+            contentContainer.appendChild(fileHeader);
+            
+            // Add close button
+            const closeButton = document.createElement('button');
+            closeButton.innerHTML = '<i class="fa-solid fa-times"></i>';
+            closeButton.className = 'close-button';
+            closeButton.onclick = () => document.body.removeChild(modal);
+            contentContainer.appendChild(closeButton);
+            
+            // Display file based on type
+            if (fileType === 'image') {
+                const img = document.createElement('img');
+                img.src = file.url;
+                img.style.maxWidth = '100%';
+                img.style.display = 'block';
+                img.style.margin = '15px auto';
+                contentContainer.appendChild(img);
+            } else if (fileType === 'pdf') {
+                const embed = document.createElement('embed');
+                embed.src = file.url;
+                embed.style.width = '100%';
+                embed.style.height = '70vh';
+                embed.style.border = 'none';
+                contentContainer.appendChild(embed);
+            } else if (fileType === 'text') {
+                // For text files, extract and display the content
+                const textContent = document.createElement('pre');
+                textContent.style.whiteSpace = 'pre-wrap';
+                textContent.style.wordBreak = 'break-word';
+                textContent.style.maxWidth = '100%';
+                textContent.style.padding = '15px';
+                textContent.style.border = '1px solid #ddd';
+                textContent.style.borderRadius = '4px';
+                textContent.style.backgroundColor = '#f8f9fa';
+                
+                // Extract text content from data URL
+                let content = '';
+                try {
+                    // Try to extract text from base64
+                    if (file.url.includes('base64')) {
+                        content = atob(file.url.split(',')[1]);
+                    } else {
+                        content = file.url;
+                    }
+                } catch (e) {
+                    content = 'Unable to display content. Try downloading the file instead.';
+                }
+                
+                textContent.textContent = content;
+                contentContainer.appendChild(textContent);
+            } else {
+                // For other file types, provide download information
+                const message = document.createElement('p');
+                message.textContent = 'This file type cannot be displayed directly. Please download it to view.';
+                contentContainer.appendChild(message);
+            }
+            
+            // Add download button
+            const downloadLink = document.createElement('a');
+            downloadLink.href = file.url;
+            downloadLink.download = file.name;
+            downloadLink.innerHTML = '<i class="fa-solid fa-download"></i> Download File';
+            downloadLink.style.display = 'block';
+            downloadLink.style.marginTop = '20px';
+            downloadLink.style.padding = '12px 15px';
+            downloadLink.style.backgroundColor = '#5c67f2';
+            downloadLink.style.color = 'white';
+            downloadLink.style.textAlign = 'center';
+            downloadLink.style.borderRadius = '4px';
+            downloadLink.style.textDecoration = 'none';
+            downloadLink.style.fontWeight = 'bold';
+            
+            contentContainer.appendChild(downloadLink);
+            
+            modal.appendChild(contentContainer);
+            document.body.appendChild(modal);
+            
+            // Add keyboard event listener to close modal when Escape is pressed
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape' && document.body.contains(modal)) {
+                    document.body.removeChild(modal);
+                }
+            });
+            
+            // Close modal when clicking outside the content
+            modal.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    document.body.removeChild(modal);
+                }
+            });
+        }
+
+        // Helper function to determine file type
+        function determineFileType(file) {
+            const name = file.name.toLowerCase();
+            const url = file.url.toLowerCase();
+            
+            if (name.endsWith('.jpg') || name.endsWith('.jpeg') || name.endsWith('.png') || name.endsWith('.gif') || url.includes('image/')) {
+                return 'image';
+            } else if (name.endsWith('.pdf') || url.includes('application/pdf')) {
+                return 'pdf';
+            } else if (name.endsWith('.txt') || name.endsWith('.csv') || name.endsWith('.md') || url.includes('text/')) {
+                return 'text';
+            } else {
+                return 'other';
+            }
+        }
+
+        // Add download section to upload form
+        function addDownloadSection() {
+            if (document.querySelector('.download-section')) return;
+            
+            const uploadSection = document.getElementById('uploadSection');
+            const downloadDiv = document.createElement('div');
+            downloadDiv.className = 'download-section';
+            
+            const downloadHeading = document.createElement('h4');
+            downloadHeading.textContent = 'File Management';
+            downloadHeading.style.marginBottom = '10px';
+            
+            const downloadInfo = document.createElement('p');
+            downloadInfo.textContent = 'Click on any file name to view or download it. Files are stored locally in your browser.';
+            downloadInfo.style.fontSize = '0.9em';
+            downloadInfo.style.color = '#666';
+            downloadInfo.style.marginBottom = '10px';
+            
+            downloadDiv.appendChild(downloadHeading);
+            downloadDiv.appendChild(downloadInfo);
+            
+            uploadSection.appendChild(downloadDiv);
+        }
+
+        document.getElementById('uploadForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const file = document.getElementById('fileUpload').files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const fileContent = e.target.result;
+                    const newFile = { id: Date.now(), name: file.name, url: fileContent };
+                    files.push(newFile);
+                    saveFiles();
+                    renderFileList();
+                    document.getElementById('fileUpload').value = '';
+                    alert(`File "${file.name}" uploaded successfully!`);
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Discussion functions
+        function saveDiscussions() {
+            localStorage.setItem('discussions', JSON.stringify(discussions));
+        }
+
+        // Format date
+        function formatDate(timestamp) {
+            const date = new Date(timestamp);
+            return date.toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        // Preview image before upload
+        function previewImage(input) {
+            const preview = document.getElementById('imagePreview');
+            const fileNameDisplay = document.getElementById('selectedFileName');
+            
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'inline-block';
+                    fileNameDisplay.textContent = input.files[0].name;
+                }
+                
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                preview.style.display = 'none';
+                fileNameDisplay.textContent = '';
+            }
+        }
+
+        // Add new discussion
+        function addDiscussion() {
+            const text = document.getElementById('discussionInput').value.trim();
+            const imageFile = document.getElementById('imageUpload').files[0];
+            
+            if (!text && !imageFile) {
+                alert('Please add some text or an image to post.');
+                return;
+            }
+            
+            const newPost = {
+    id: Date.now(),
+    author: currentUser,
+    role: userRole,  // Add this line to store the role
+    timestamp: Date.now(),
+    text: text,
+    image: null,
+    likes: 0,
+    dislikes: 0,
+    likedBy: [],
+    dislikedBy: [],
+    replies: []
+};
+            
+            if (imageFile) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    newPost.image = e.target.result;
+                    discussions.unshift(newPost); // Add to beginning of array
+                    saveDiscussions();
+                    renderDiscussions();
+                    clearPostForm();
+                };
+                reader.readAsDataURL(imageFile);
+            } else {
+                discussions.unshift(newPost); // Add to beginning of array
+                saveDiscussions();
+                renderDiscussions();
+                clearPostForm();
+            }
+        }
+
+        // Clear post form
+        function clearPostForm() {
+            document.getElementById('discussionInput').value = '';
+            document.getElementById('imageUpload').value = '';
+            document.getElementById('imagePreview').style.display = 'none';
+            document.getElementById('selectedFileName').textContent = '';
+        }
+
+        // Toggle reply form visibility
+        function toggleReplyForm(id) {
+            const replyForm = document.getElementById(`replyForm${id}`);
+            if (replyForm.style.display === 'block') {
+                replyForm.style.display = 'none';
+            } else {
+                replyForm.style.display = 'block';
+                document.getElementById(`replyInput${id}`).focus();
+            }
+        }
+
+        // Add reply to a discussion
+        function addReply(discussionId) {
+            const replyText = document.getElementById(`replyInput${discussionId}`).value.trim();
+            const replyImageFile = document.getElementById(`replyImageUpload${discussionId}`).files[0];
+            
+            if (!replyText && !replyImageFile) {
+                alert('Please add some text or an image to reply.');
+                return;
+            }
+            
+            const discussionIndex = discussions.findIndex(d => d.id === discussionId);
+            if (discussionIndex === -1) return;
+            
+            const newReply = {
+    id: Date.now(),
+    author: currentUser,
+    role: userRole,  // Add this line
+    timestamp: Date.now(),
+    text: replyText,
+    image: null
+};
+            if (replyImageFile) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    newReply.image = e.target.result;
+                    discussions[discussionIndex].replies.push(newReply);
+                    saveDiscussions();
+                    renderDiscussions();
+                    document.getElementById(`replyForm${discussionId}`).style.display = 'none';
+                };
+                reader.readAsDataURL(replyImageFile);
+            } else {
+                discussions[discussionIndex].replies.push(newReply);
+                saveDiscussions();
+                renderDiscussions();
+                document.getElementById(`replyForm${discussionId}`).style.display = 'none';
+            }
+        }
+
+        // Handle reactions (likes/dislikes)
+        function react(discussionId, type) {
+            const discussionIndex = discussions.findIndex(d => d.id === discussionId);
+            if (discussionIndex === -1) return;
+            
+            const discussion = discussions[discussionIndex];
+            const hasLiked = discussion.likedBy.includes(currentUser);
+            const hasDisliked = discussion.dislikedBy.includes(currentUser);
+            
+            if (type === 'like') {
+                if (hasLiked) {
+                    // Undo like
+                    discussion.likes--;
+                    discussion.likedBy = discussion.likedBy.filter(user => user !== currentUser);
+                } else {
+                    // Add like
+                    discussion.likes++;
+                    discussion.likedBy.push(currentUser);
+                    
+                    // Remove dislike if exists
+                    if (hasDisliked) {
+                        discussion.dislikes--;
+                        discussion.dislikedBy = discussion.dislikedBy.filter(user => user !== currentUser);
+                    }
+                }
+            } else if (type === 'dislike') {
+                if (hasDisliked) {
+                    // Undo dislike
+                    discussion.dislikes--;
+                    discussion.dislikedBy = discussion.dislikedBy.filter(user => user !== currentUser);
+                } else {
+                    // Add dislike
+                    discussion.dislikes++;
+                    discussion.dislikedBy.push(currentUser);
+                    
+                    // Remove like if exists
+                    if (hasLiked) {
+                        discussion.likes--;
+                        discussion.likedBy = discussion.likedBy.filter(user => user !== currentUser);
+                    }
+                }
+            }
+            
+            saveDiscussions();
+            renderDiscussions();
+        }
+
+        // Edit discussion
+        function editDiscussion(discussionId) {
+            const discussionIndex = discussions.findIndex(d => d.id === discussionId);
+            if (discussionIndex === -1) return;
+            
+            const newText = prompt('Edit your post:', discussions[discussionIndex].text);
+            if (newText !== null) {
+                discussions[discussionIndex].text = newText;
+                discussions[discussionIndex].edited = true;
+                saveDiscussions();
+                renderDiscussions();
+            }
+        }
+
+        // Delete discussion
+        function deleteDiscussion(discussionId) {
+            if (confirm('Are you sure you want to delete this post? This action cannot be undone.')) {
+                const discussionIndex = discussions.findIndex(d => d.id === discussionId);
+                if (discussionIndex === -1) return;
+                
+                discussions.splice(discussionIndex, 1);
+                saveDiscussions();
+                renderDiscussions();
+            }
+        }
+
+        // Edit reply
+        function editReply(discussionId, replyId) {
+            const discussionIndex = discussions.findIndex(d => d.id === discussionId);
+            if (discussionIndex === -1) return;
+            
+            const replyIndex = discussions[discussionIndex].replies.findIndex(r => r.id === replyId);
+            if (replyIndex === -1) return;
+            
+            const newText = prompt('Edit your reply:', discussions[discussionIndex].replies[replyIndex].text);
+            if (newText !== null) {
+                discussions[discussionIndex].replies[replyIndex].text = newText;
+                discussions[discussionIndex].replies[replyIndex].edited = true;
+                saveDiscussions();
+                renderDiscussions();
+            }
+        }
+
+        // Delete reply
+        function deleteReply(discussionId, replyId) {
+            if (confirm('Are you sure you want to delete this reply? This action cannot be undone.')) {
+                const discussionIndex = discussions.findIndex(d => d.id === discussionId);
+                if (discussionIndex === -1) return;
+                
+                const replyIndex = discussions[discussionIndex].replies.findIndex(r => r.id === replyId);
+                if (replyIndex === -1) return;
+                
+                discussions[discussionIndex].replies.splice(replyIndex, 1);
+                saveDiscussions();
+                renderDiscussions();
+            }
+        }
+
+        // Render discussions
+        function renderDiscussions() {
+            const discussionContainer = document.getElementById('discussionContainer');
+            discussionContainer.innerHTML = '';
+            
+            if (discussions.length === 0) {
+                discussionContainer.innerHTML = '<p class="text-center">No discussions yet. Be the first to post!</p>';
+                return;
+            }
+            
+            discussions.forEach(discussion => {
+                const hasLiked = discussion.likedBy?.includes(currentUser);
+                const hasDisliked = discussion.dislikedBy?.includes(currentUser);
+                
+                const discussionEl = document.createElement('div');
+                discussionEl.className = 'discussion-item fade-in';
+                
+                // Create post header
+                const postHeader = document.createElement('div');
+                postHeader.className = 'post-header';
+                
+                const authorTime = document.createElement('div');
+                authorTime.innerHTML = `
+    <span class="post-author">${discussion.role === 'teacher' ? 'Teacher' : (discussion.role === 'student' ? 'Student' : 'Anonymous User')}</span>
+    <span class="post-time">• ${formatDate(discussion.timestamp)}</span>
+    ${discussion.edited ? '<span class="post-edited">(edited)</span>' : ''}
+`;
+                
+                postHeader.appendChild(authorTime);
+                discussionEl.appendChild(postHeader);
+                
+                // Create post content
+                const postContent = document.createElement('div');
+                postContent.className = 'post-content';
+                postContent.textContent = discussion.text;
+                
+                if (discussion.image) {
+                    const img = document.createElement('img');
+                    img.src = discussion.image;
+                    img.alt = 'Uploaded image';
+                    img.loading = 'lazy';
+                    postContent.appendChild(img);
+                }
+                
+                discussionEl.appendChild(postContent);
+                
+                // Create post actions
+                const postActions = document.createElement('div');
+                postActions.className = 'post-actions';
+                
+                const reactionButtons = document.createElement('div');
+                reactionButtons.className = 'reaction-buttons';
+                reactionButtons.innerHTML = `
+                    <button class="reaction-button ${hasLiked ? 'active' : ''}" onclick="react(${discussion.id}, 'like')">
+                        <i class="fa-solid fa-thumbs-up"></i> ${discussion.likes || 0}
+                    </button>
+                    <button class="reaction-button ${hasDisliked ? 'active' : ''}" onclick="react(${discussion.id}, 'dislike')">
+                        <i class="fa-solid fa-thumbs-down"></i> ${discussion.dislikes || 0}
+                    </button>
+                    <button class="reply-button" onclick="toggleReplyForm(${discussion.id})">
+                        <i class="fa-solid fa-reply"></i> Reply
+                    </button>
+                `;
+                
+                const actionButtons = document.createElement('div');
+                actionButtons.className = 'action-buttons';
+                
+                if (currentUser === discussion.author || userRole === 'teacher') {
+                    actionButtons.innerHTML = `
+                        <button class="edit-button" onclick="editDiscussion(${discussion.id})">
+                            <i class="fa-solid fa-pencil"></i> Edit
+                        </button>
+                        <button class="delete-button" onclick="deleteDiscussion(${discussion.id})">
+                            <i class="fa-solid fa-trash"></i> Delete
+                        </button>
+                    `;
+                }
+                
+                postActions.appendChild(reactionButtons);
+                postActions.appendChild(actionButtons);
+                discussionEl.appendChild(postActions);
+                
+                // Create reply section
+                const replySection = document.createElement('div');
+                replySection.className = 'reply-section';
+                
+                // Reply form
+                const replyForm = document.createElement('div');
+                replyForm.className = 'reply-form';
+                replyForm.id = `replyForm${discussion.id}`;
+                replyForm.innerHTML = `
+                    <textarea id="replyInput${discussion.id}" placeholder="Write your reply..."></textarea>
+                    <div class="form-actions">
+                        <div class="file-input-wrapper">
+                            <label for="replyImageUpload${discussion.id}" class="file-input-label">
+                                <i class="fa fa-image"></i> Add Image
+                            </label>
+                            <input type="file" id="replyImageUpload${discussion.id}" accept="image/*">
+                        </div>
+                        <button class="post-button" onclick="addReply(${discussion.id})">Post Reply</button>
+                    </div>
+                `;
+                
+                replySection.appendChild(replyForm);
+                
+                // Render replies
+                if (discussion.replies && discussion.replies.length > 0) {
+                    discussion.replies.forEach(reply => {
+                        const replyEl = document.createElement('div');
+                        replyEl.className = 'reply-item';
+                        
+                        const replyHeader = document.createElement('div');
+                        replyHeader.className = 'post-header';
+                        replyHeader.innerHTML = `
+    <span class="reply-author">${reply.role === 'teacher' ? 'Teacher' : (reply.role === 'student' ? 'Student' : 'Anonymous User')}</span>
+    <span class="reply-time">• ${formatDate(reply.timestamp)}</span>
+    ${reply.edited ? '<span class="reply-edited">(edited)</span>' : ''}
+`;
+                        const replyContent = document.createElement('div');
+                        replyContent.className = 'reply-content';
+                        replyContent.textContent = reply.text;
+                        
+                        if (reply.image) {
+                            const img = document.createElement('img');
+                            img.src = reply.image;
+                            img.alt = 'Uploaded image';
+                            img.loading = 'lazy';
+                            replyContent.appendChild(img);
+                        }
+                        
+                        const replyActions = document.createElement('div');
+                        replyActions.className = 'reply-actions';
+                        
+                        if (currentUser === reply.author || userRole === 'teacher') {
+                            replyActions.innerHTML = `
+                                <button class="edit-button" onclick="editReply(${discussion.id}, ${reply.id})">
+                                    <i class="fa-solid fa-pencil"></i> Edit
+                                </button>
+                                <button class="delete-button" onclick="deleteReply(${discussion.id}, ${reply.id})">
+                                    <i class="fa-solid fa-trash"></i> Delete
+                                </button>
+                            `;
+                        }
+                        
+                        replyEl.appendChild(replyHeader);
+                        replyEl.appendChild(replyContent);
+                        replyEl.appendChild(replyActions);
+                        replySection.appendChild(replyEl);
+                    });
+                }
+                
+                discussionEl.appendChild(replySection);
+                discussionContainer.appendChild(discussionEl);
+            });
+        }
+
+        // Initialize
+        renderFileList();
+        renderDiscussions();
+    </script>
+</body>
+</html>

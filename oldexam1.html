@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Old Exams Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+          
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #f4f4f9, #e0e4e9);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* Header Styling */
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #558154;
+            color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            animation: fadeInDown 1s ease-in-out;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+
+        /* Main Section Styling */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        #subjectSection {
+            text-align: center;
+        }
+
+        #subjectSection h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #558154;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Faculty Buttons Styling */
+        #subjectList {
+            display: grid;
+            gap: 20px;
+            padding: 20px;
+            width: 100%;
+           
+            margin: 0 auto;
+        }
+
+        /* Desktop: Row Layout */
+        @media (min-width: 768px) {
+            #subjectList {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Row layout */
+            }
+        }
+
+        /* Mobile: Column Layout */
+        @media (max-width: 767px) {
+            #subjectList {
+                grid-template-columns: 1fr; /* Column layout */
+                max-width: 400px; /* Optional: Limit width for better readability */
+            }
+        }
+
+        .subject-btn {
+            
+            padding: 20px;
+            background-color: #558154;
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .subject-btn i {
+            font-size: 2rem;
+            color: #fff;
+        }
+
+        .subject-btn:hover {
+            background-color: #446a44;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .subject-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Faculty Descriptions */
+        .faculty-description {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Footer Styling */
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #558154;
+            color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 1200px;
+            animation: fadeInUp 1s ease-in-out;
+        }
+
+        footer p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        footer a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.3s ease;
+        }
+
+        footer a:hover {
+            opacity: 0.8;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Old Exams Portal</h1>
+        <p>Access past exam papers and resources for your faculty.</p>
+    </header>
+
+    <main>
+        <section id="subjectSection">
+            <h2>Select a Faculty</h2>
+            <div id="subjectList">
+                <button class="subject-btn" data-page="itfaculty.html">
+                    <i class="fas fa-laptop-code"></i>
+                    IT Faculty
+                    <span class="faculty-description">Explore IT-related exam papers and resources.</span>
+                </button>
+                <button class="subject-btn" data-page="biology.html">
+                    <i class="fas fa-dna"></i>
+                    Biology
+                    <span class="faculty-description">Access biology exam papers and study materials.</span>
+                </button>
+                <button class="subject-btn" data-page="media.html">
+                    <i class="fas fa-film"></i>
+                    Media and Science
+                    <span class="faculty-description">Find media and science-related resources.</span>
+                </button>
+                <button class="subject-btn" data-page="commerce.html">
+                    <i class="fas fa-chart-line"></i>
+                    Commerce
+                    <span class="faculty-description">Get commerce exam papers and study guides.</span>
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2023 Old Exams Portal. All rights reserved. | <a href="#">Privacy Policy</a></p>
+    </footer>
+
+    <script>
+        // JavaScript to handle button clicks
+        document.querySelectorAll('.subject-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const page = this.getAttribute('data-page');
+                window.location.href = page;
+            });
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,894 @@
+html {
+    scroll-behavior: smooth;
+}
+
+:root {
+    text-align: center;
+    display: flex;
+    margin: 60px;
+    min-height: 100vh;
+    background-color: #9bcb9a;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+/* Navigation Styles */
+.navigation {
+    position: absolute;
+    top: 0%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    width: 300px;
+    height: 100px;
+    background-color: #4b0688;
+    border-radius: 10px;
+}
+
+.navigation ul {
+    display: flex;
+    width: 350px;
+    transition: all 0.3s ease;
+}
+
+.navigation ul li {
+    position: relative;
+    list-style: none;
+    width: 70px;
+    height: 70px;
+    z-index: 1;
+}
+
+.navigation ul li a {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    text-align: center;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.navigation ul li a .icon {
+    position: relative;
+    display: block;
+    line-height: 75px;
+    font-size: 1.5em;
+    text-align: center;
+    transition: .5s;
+    transition: transform 0.5s ease, color 0.5s ease;
+    color: #fff;
+}
+
+.navigation ul li.active a .icon {
+    transform: translateY(-60px);
+}
+
+.navigation ul li a .text {
+    position: absolute;
+    color: #fff;
+    font-weight: 400;
+    font-size: 0.75rem;
+    letter-spacing: 0.05rem;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    opacity: 0.3;
+    transform: translateY(22px);
+}
+
+.navigation ul li.active a .text {
+    opacity: 1;
+    transform: translateY(-5px);
+}
+
+.indicator {
+    position: absolute;
+    top: -50%;
+    width: 60px;
+    height: 60px;
+    background-color: #0097e6;
+    border-radius: 50%;
+    border: 6px solid #d2dae2;
+    transition: transform 0.5s ease, background-color 0.3s ease;
+}
+
+.indicator::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -22px;
+    width: 20px;
+    height: 20px;
+    background: transparent;
+    border-top-right-radius: 30px;
+    box-shadow: 1px -10px 0 0 #d2dae2;
+}
+
+.indicator::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -22px;
+    width: 20px;
+    height: 20px;
+    background: transparent;
+    border-top-left-radius: 30px;
+    box-shadow: -1px -10px 0 0 #d2dae2;
+}
+
+.navigation ul li:nth-child(1).active~.indicator {
+    transform: translateX(calc(70px * 0));
+}
+
+.navigation ul li:nth-child(2).active~.indicator {
+    transform: translateX(calc(70px * 1));
+}
+
+.navigation ul li:nth-child(3).active~.indicator {
+    transform: translateX(calc(70px * 2));
+}
+
+body {
+    background: linear-gradient(135deg, #1e1e2e, #3a3a55);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100vh;
+    overflow-x: hidden;
+    transition: background-color 0.5s ease, all 0.3s ease;
+}
+
+.shadow-container {
+    margin-top: 100px; /* Push text below navigation */
+    perspective: 1000px;
+    white-space: nowrap;
+    width: 100vw;
+    text-align: center;
+    transition: transform 0.5s ease;
+}
+
+.shadow-text {
+    font-size: 24px; /* Default font size for smaller screens */
+    font-family: 'Times New Roman', Times, serif;
+    color: #fff;
+    letter-spacing: 3px; /* Smaller letter spacing for smaller screens */
+    animation: shadowExpand 2s infinite alternate;
+    display: inline-block;
+    transform-style: preserve-3d;
+    position: fixed;
+    top: 20px; /* Default distance from the top */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Center adjustment */
+    transition: text-shadow 0.5s ease;
+    white-space: normal; /* Allow text to wrap */
+    word-wrap: break-word; /* Break long words */
+    overflow-wrap: break-word; /* Modern alternative */
+    max-width: 90%; /* Prevent overflow */
+    text-align: center; /* Center text within the container */
+    padding: 10px; /* Add padding for better spacing */
+}
+
+/* Moves text left to right */
+@keyframes moveText {
+    0% {
+        transform: translateX(-20%);
+    }
+    100% {
+        transform: translateX(30%);
+    }
+}
+
+@keyframes shadowExpand {
+    0% {
+        text-shadow: 0 0 5px #ff0;
+    }
+    100% {
+        text-shadow: 0 0 20px #ff0, 0 0 30px #ff0, 0 0 40px #ff0;
+    }
+}
+@media (max-width: 1600px) {
+    .shadow-text {
+        top:10px;
+        font-size: 18px; /* Slightly larger font size */
+        letter-spacing: 4px; /* Slightly larger letter spacing */
+        max-width: 80%; /* Adjust max-width for better readability */
+    }
+}
+/* Responsive Design */
+@media (max-width: 1024px) {
+   
+   
+
+ .shadow-text {
+        top:-10px;
+        font-size: 18px; /* Slightly larger font size */
+        letter-spacing: 4px; /* Slightly larger letter spacing */
+        max-width: 80%; /* Adjust max-width for better readability */
+    }
+}
+
+@media (max-width: 768px) {
+    
+
+    .navigation ul li a .icon {
+        position: relative;
+        display: block;
+        line-height: 75px;
+        font-size: 1.5em;
+        text-align: center;
+        top:-10px;
+        transition: .5s;
+        left: -5px;
+        transition: transform 0.5s ease, color 0.5s ease;
+        color: #fff;
+    }
+    .shadow-text {
+    
+        font-size: 24px; /* Smaller font size for tablets */
+        letter-spacing: 3px; /* Smaller letter spacing */
+        max-width: 90%; /* Adjust max-width for better readability */
+    }
+}
+
+@media (max-width: 480px) {
+   
+
+    .navigation ul {
+        width: 250px;
+    }
+
+    
+
+    .navigation ul li a .icon {
+        font-size: 1em;
+    }
+
+    .navigation ul li a .text {
+        font-size: 0.5rem;
+    }
+
+    .indicator {
+        width: 40px;
+        height: 40px;
+    }
+
+    .shadow-text {
+        font-size: 18px; /* Smaller font size for mobile */
+        letter-spacing: 2px; /* Smaller letter spacing */
+        max-width: 95%; /* Adjust max-width for better readability */
+        top: -20px; /* Move text closer to the top */
+    }
+}
+/* Home Section: Text Left, Image Right */
+.home-section {
+    display: flex;
+    align-items: center; /* Vertically center text and image */
+    justify-content: space-between; /* Text on left, image on right */
+    padding: 50px;
+    gap: 60px; /* Space between text and image */
+    
+    width: 95%; /* Responsive width */
+    border-radius: 10px;
+    backdrop-filter: blur(100px); /* Elegant blur effect */
+    background-color: #f0d9b5;
+    box-shadow: 0 8px 20px rgba(0, 0, 255, 0.5); /* Fancy glow shadow */
+    margin: 80px; /* Centering the section */
+    transition: all 0.5s ease;
+}
+
+/* Text Styling */
+.text-content {
+    color: rgb(0, 0, 0);
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1.8;
+    max-width: 500px; /* Restrict text width */
+    text-shadow: 2px 2px 10px rgba(255, 255, 255, 0.5); /* Fancy text glow effect */
+    transition: all 0.3s ease;
+}
+
+.home-section h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    line-height: 1.2;
+    position: relative; /* Required for the underline effect */
+    display: inline-block; /* Ensures the underline only spans the text */
+}
+
+/* Underline Effect on Hover */
+.home-section h1::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -5px; /* Adjust this value to control the distance from the text */
+    width: 0; /* Start with no width */
+    height: 3px; /* Thickness of the underline */
+    background-color: #558154; /* Color of the underline */
+    transition: width 0.3s ease; /* Smooth transition for the underline */
+}
+
+.home-section h1:hover::after {
+    width: 100%; /* Expand the underline to full width on hover */
+}
+
+/* Image Box */
+.image-boxx {
+ position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 255, 0.4);
+    transition: transform 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+}
+/* Image Styling */
+.image-boxx img {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 20px;
+    transition: transform 0.2s ease-in-out, filter 0.2s ease-in-out;
+}
+
+/* Hover Effects */
+.image-boxx:hover {
+    transform: scale(1.05);
+    box-shadow: 0 20px 40px rgba(0, 0, 255, 0.6);
+    
+}
+
+.image-boxx:hover img {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .home-section {
+        flex-direction: column; /* Stack on tablets */
+        text-align: center;
+        padding: 40px;
+    }
+
+    .image-box img {
+        max-width: 350px; /* Smaller image */
+    }
+}
+
+@media (max-width: 768px) {
+    .home-section {
+        flex-direction: column; /* Stack on mobile */
+        text-align: center;
+        padding: 30px;
+    }
+
+    .image-box img {
+        max-width: 300px; /* Smaller image */
+    }
+}
+
+
+
+
+
+
+/* Features Section */
+.features-section {
+    position: relative;
+    top: -60px;
+    padding: 80px 20px;
+    text-align: center;
+  
+    margin: 50px 0;
+}
+
+.features-heading {
+    
+    font-size: 2.5rem;
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 40px;
+    color: #000000;
+    text-shadow: 0 0 10px #ffffff, 0 0 20px #ffffff;
+}
+.features-grid {
+    display: flex;
+    justify-content: space-between; /* Distribute space evenly between cards */
+    gap: 30px; /* Space between cards */
+    flex-wrap: nowrap; /* Prevent wrapping to the next line */
+}
+
+.feature-card {
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    padding: 30px;
+    border-radius: 20px;
+    max-width: 300px;
+    text-align: center;
+    transition: all 0.3s ease;
+    color: #fff; /* White text for contrast */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Light border for depth */
+    overflow: hidden;
+    position: relative;
+}
+
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, #9bcb9a, rgba(255, 255, 255, 0)); 
+    transform: rotate(45deg);
+    transition: all 0.5s ease;
+    opacity: 0;
+}
+
+.feature-card:hover::before {
+    opacity: 1;
+    top: 0;
+    left: 0;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px); /* Lift effect on hover */
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0); /* Enhanced shadow on hover */
+}
+
+.feature-icon {
+    font-size: 3em;
+    color: #fff; /* White icon color */
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+}
+
+.feature-card:hover .feature-icon {
+    transform: scale(1.1); /* Slightly enlarge icon on hover */
+}
+
+.feature-title {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    font-weight: 600;
+    color: #fff; /* White text for contrast */
+}
+
+.feature-description {
+    font-size: 1em;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.9); /* Slightly transparent white text */
+}
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
+}
+
+.feature-icon {
+    font-size: 3rem;
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+
+.feature-title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.feature-description {
+    font-size: 1rem;
+    color: #ddd;
+}
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .hero-section {
+        flex-direction: column;
+        text-align: center;
+        padding: 60px 20px;
+    }
+
+    .hero-image img {
+        max-width: 300px;
+    }
+
+    .features-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-heading {
+        font-size: 2.5rem;
+    }
+
+    .hero-subheading {
+        font-size: 1.2rem;
+    }
+
+    .hero-description {
+        font-size: 1rem;
+    }
+
+    .navigation {
+        width: 90%;
+    }
+}
+
+
+
+
+/* Main Container with Background Color */
+.main-container {
+    background-color: #0097e6; /* Your desired background color */
+    width: 100%;
+    height: auto;
+    padding: 50px 20px; /* Adjust padding as needed */
+    color: white; /* Default text color for all content */
+}
+
+/* College Selection Section */
+.image-college {
+    width: 100%;
+    text-align: center;
+}
+
+.text-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.content-container {
+    text-align: center;
+}
+
+.cursive-heading {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+}
+
+.highlight {
+    color: #ffcc00;
+    font-weight: bold;
+}
+
+/* Search Container */
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    gap: 10px; /* Space between input and button */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+#collegeSearch {
+    padding: 10px;
+    width: 300px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+#collegeSearch:focus {
+    outline: none;
+    border-color: #ffcc00;
+    box-shadow: 0 0 5px rgba(255, 204, 0, 0.5);
+}
+
+#goBackButton {
+    padding: 10px 20px;
+    background-color: #ffcc00;
+    border: none;
+    border-radius: 5px;
+    color: #333;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: none; /* Hidden by default */
+}
+
+#goBackButton:hover {
+    background-color: #e6b800;
+}
+
+/* Search Results message */
+#searchResult {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    color: red;
+    text-align: center;
+    min-height: 30px; /* Prevent layout shift */
+}
+
+/* College Grid */
+.image-container {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; 
+    margin-top: 60px;
+    width: 100%;
+}
+
+.image-box {
+    text-align: center;
+    transition: all 0.3s ease;
+    width: 150px; /* Fixed width to prevent shrinking */
+    margin-bottom: 20px;
+    opacity: 1;
+    visibility: visible;
+    flex: 0 0 auto; /* Prevent flex items from growing or shrinking */
+}
+
+.image-box img {
+    width: 100px; /* Set your desired icon size */
+    height: 100px; /* Set your desired icon size */
+    object-fit: contain; /* Ensure the image retains its aspect ratio */
+    transition: transform 0.3s ease;
+}
+
+.image-box:hover img {
+    transform: scale(1.1);
+}
+
+.image-box figcaption {
+    margin-top: 10px;
+    font-size: 1rem;
+    color: white; /* Ensure text is visible on the background */
+}
+
+/* Hide/Show Logic */
+.image-box.hide {
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.image-box.show {
+    display: block;
+    animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Highlight for search results */
+.highlight-match {
+    background-color: #ffcc00;
+    padding: 0 3px;
+    border-radius: 3px;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+    .cursive-heading {
+        font-size: 2.8rem;
+    }
+
+    .image-box {
+        width: 130px; /* Slightly smaller but still fixed */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .cursive-heading {
+        font-size: 2.2rem;
+    }
+
+    .main-container {
+        padding: 30px 15px; /* Adjust padding for smaller screens */
+    }
+
+    #collegeSearch {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .search-container {
+        flex-direction: column;
+    }
+
+    #goBackButton {
+        margin-top: 10px;
+    }
+
+    .image-box {
+        width: 120px;
+    }
+
+    .image-container {
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+    }
+}
+/* Login Block */
+.login-block {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #558154;
+    padding: 20px;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+    
+    /* Added styling */
+    width: 320px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+}
+
+.login-block h2 {
+    margin-top: 0;
+    font-size: 24px;
+    margin-bottom: 15px;
+    position: relative;
+    padding-bottom: 10px;
+    color: #ffffff;
+}
+
+.login-block h2::after {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 3px;
+    background-color: #ffffff;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.login-block p {
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.role-btn, .close-btn {
+    display: block;
+    margin: 10px auto;
+    padding: 8px 15px;
+    cursor: pointer;
+    
+    /* Added styling */
+    width: 80%;
+    background-color: #ffffff;
+    color: #558154;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: all 0.2s ease;
+    font-size: 14px;
+}
+
+.role-btn:hover, .close-btn:hover {
+    background-color: #f0f0f0;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+.close-btn {
+    background-color: rgba(255, 255, 255, 0.3);
+    color: white;
+    margin-top: 15px;
+}
+
+.close-btn:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+#passKey {
+    width: 80%;
+    padding: 10px;
+    margin: 15px auto;
+    display: block;
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+#passKey:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+}
+
+button[onclick="validatePass()"] {
+    background-color: #3e6b3d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s ease;
+    width: 80%;
+    margin: 0 auto 15px auto;
+    display: block;
+}
+
+button[onclick="validatePass()"]:hover {
+    background-color: #2e5a2d;
+}
+/* Error styling for password input */
+#passKey.error {
+    border: 2px solid #ff3333;
+    box-shadow: 0 0 5px rgba(255, 51, 51, 0.5);
+}
+
+/* Enhanced error message styling */
+#errorMsg {
+    color: #ff3333;
+    font-size: 12px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 5px 10px;
+    border-radius: 3px;
+    margin-top: 10px;
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+/* Animation for error message appearance */
+@keyframes fadeInError {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+#errorMsg:not(:empty) {
+    animation: fadeInError 0.3s forwards;
+}
+
+/* Animation when login appears */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translate(-50%, -60%); }
+    to { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+.login-block.visible {
+    display: block;
+    animation: fadeIn 0.3s forwards;
+}
+/* Active state for role buttons */
+.role-btn.active {
+    background-color: #3e6b3d;
+    color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Shake animation for incorrect password */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+}
+
+.shake {
+    animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+/* Fade out animation */
+@keyframes fadeOut {
+    from { opacity: 1; transform: translate(-50%, -50%); }
+    to { opacity: 0; transform: translate(-50%, -60%); }
+}
+
+.login-block.closing {
+    animation: fadeOut 0.3s forwards;
+}

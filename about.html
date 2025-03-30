@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - 28Softwares</title>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: #0f172a;
+            color: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(45deg, #1e3a8a, #0ea5e9);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            animation: pulse 8s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.2); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            padding: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .about-section {
+            padding: 8rem 2rem;
+            background: #0f172a;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #0ea5e9;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background: rgba(255,255,255,0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(14, 165, 233, 0.2);
+        }
+
+        .product-icon {
+            font-size: 3rem;
+            color: #0ea5e9;
+            margin-bottom: 1rem;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 5rem auto;
+            padding: 0 2rem;
+        }
+
+        .timeline-item {
+            padding: 2rem;
+            margin: 2rem 0;
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            transition: transform 0.3s;
+        }
+
+        .timeline-item:hover {
+            transform: scale(1.02);
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+
+        .tech-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 2rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50px;
+            transition: transform 0.3s;
+        }
+
+        .tech-item:hover {
+            transform: translateY(-5px);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+            .tech-stack {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="hero-content" data-aos="zoom-in">
+            <h1>28Softwares</h1>
+            <p class="subtitle">Building Tomorrow's Solutions Today</p>
+        </div>
+    </section>
+
+    <section class="about-section">
+        <h2 class="section-title" data-aos="fade-up">Why 28?</h2>
+        
+        <div class="product-grid">
+            <div class="product-card" data-aos="fade-right">
+                <i class="fas fa-hospital product-icon"></i>
+                <h3>Healthcare Solutions</h3>
+                <p>AI-powered hospital management systems transforming patient care</p>
+            </div>
+
+            <div class="product-card" data-aos="fade-up">
+                <i class="fas fa-school product-icon"></i>
+                <h3>Education Systems</h3>
+                <p>Smart school management platforms with predictive analytics</p>
+            </div>
+
+            <div class="product-card" data-aos="fade-left">
+                <i class="fas fa-hotel product-icon"></i>
+                <h3>Hospitality Tech</h3>
+                <p>Integrated hotel management solutions with IoT integration</p>
+            </div>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-item" data-aos="fade-right">
+                <h3>Our Mission</h3>
+                <p>Developing 28 specialized software solutions across diverse industries</p>
+            </div>
+
+            <div class="timeline-item" data-aos="fade-left">
+                <h3>Core Technologies</h3>
+                <div class="tech-stack">
+                    <div class="tech-item">
+                        <i class="fab fa-react"></i>
+                        <span>AI/ML Integration</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-cloud"></i>
+                        <span>Cloud Solutions</span>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-robot"></i>
+                        <span>Automation</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true, easing: 'ease-in-out' });
+    </script>
+</body>
+</html>

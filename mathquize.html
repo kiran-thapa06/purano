@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Quiz System</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.0/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .container {
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .login-container, .teacher-panel, .student-panel {
+            display: none;
+        }
+        .question-item {
+            border: 1px solid #eee;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .question-actions {
+            margin-top: 10px;
+        }
+        button {
+            padding: 8px 15px;
+            margin-right: 5px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        button.delete {
+            background-color: #f44336;
+        }
+        button.delete:hover {
+            background-color: #d32f2f;
+        }
+        button.edit {
+            background-color: #2196F3;
+        }
+        button.edit:hover {
+            background-color: #0b7dda;
+        }
+        input[type="text"], input[type="password"], select, textarea, input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .correct {
+            background-color: #dff0d8;
+            color: #3c763d;
+        }
+        .incorrect {
+            background-color: #f2dede;
+            color: #a94442;
+        }
+        .hidden {
+            display: none;
+        }
+        .active {
+            display: block;
+        }
+        .math-preview {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 8px;
+            border-radius: 4px;
+            min-height: 40px;
+            background-color: #f9f9f9;
+        }
+        .question-type-fields {
+            margin-top: 15px;
+            padding: 10px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+        }
+        .true-false-options, .fill-blank-options, .multiple-choice-options {
+            margin-top: 10px;
+        }
+        .tab-buttons {
+            margin-bottom: 15px;
+            display: flex;
+            gap: 5px;
+        }
+        .tab-button {
+            background-color: #f1f1f1;
+            color: black;
+            border: 1px solid #ccc;
+            padding: 8px 15px;
+        }
+        .tab-button.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .btn-math-symbol {
+            background-color: #ddd;
+            color: black;
+            margin: 2px;
+            padding: 5px 10px;
+        }
+        .math-toolbar {
+            margin: 10px 0;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .math-instructions {
+            margin: 15px 0;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-left: 4px solid #4CAF50;
+            font-size: 14px;
+        }
+        .quiz-results {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+        }
+        .quiz-results h3 {
+            margin-top: 0;
+        }
+        .marks-input {
+            width: 60px !important;
+            display: inline-block;
+            margin-left: 10px;
+        }
+        .marks-label {
+            display: inline-block;
+            margin-left: 15px;
+        }
+        .quiz-info {
+            padding: 15px;
+            background-color: #f0f8ff;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .quiz-timer {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #d9534f;
+        }
+        .notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px;
+    background-color: #f44336;
+    color: white;
+    border-radius: 5px;
+    z-index: 1000;
+    display: none;
+}
+
+.notification.half-time {
+    background-color: #ff9800;
+    animation: fadeInOut 5s forwards;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translateY(-20px); }
+    10% { opacity: 1; transform: translateY(0); }
+    90% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-20px); }
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Enhanced Quiz System</h1>
+        <div id="login-container" class="login-container active">
+            <h2>Login</h2>
+            <div>
+                <label for="username">Username:</label>
+                <input type="text" id="username" placeholder="Enter username">
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" placeholder="Enter password">
+            </div>
+            <div>
+                <label for="role">Role:</label>
+                <select id="role">
+                    <option value="teacher">Teacher</option>
+                    <option value="student">Student</option>
+                </select>
+            </div>
+            <button id="login-btn">Login</button>
+            <p id="login-message"></p>
+        </div>
+        <div id="teacher-panel" class="teacher-panel">
+            <h2>Teacher Panel</h2>
+            <button id="logout-teacher">Logout</button>
+            <div class="tab-buttons">
+                <button id="tab-add-question" class="tab-button active">Add Question</button>
+                <button id="tab-question-list" class="tab-button">Question List</button>
+                <button id="tab-quiz-settings" class="tab-button">Quiz Settings</button>
+            </div>
+            <div id="add-question-form" class="tab-content active">
+                <h3>Add Question</h3>
+                <div>
+                    <label for="question-type">Question Type:</label>
+                    <select id="question-type">
+                        <option value="multiple-choice">Multiple Choice</option>
+                        <option value="true-false">True/False</option>
+                        <option value="fill-blank">Fill in the Blank</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="question-text">Question:</label>
+                    <textarea id="question-text" placeholder="Enter question" rows="3"></textarea>
+                    <div class="math-toolbar">
+                        <button class="btn-math-symbol" data-symbol="\frac{a}{b}">Fraction</button>
+                        <button class="btn-math-symbol" data-symbol="\sqrt{x}">Square Root</button>
+                        <button class="btn-math-symbol" data-symbol="x^{}">Exponent</button>
+                        <button class="btn-math-symbol" data-symbol="\pi">Pi</button>
+                        <button class="btn-math-symbol" data-symbol="\sum_{i=1}^n">Sum</button>
+                        <button class="btn-math-symbol" data-symbol="\int_{}^{} \, d">Integral</button>
+                        <button class="btn-math-symbol" data-symbol="\infty">Infinity</button>
+                        <button class="btn-math-symbol" data-symbol="\pm">Plus/Minus</button>
+                        <button class="btn-math-symbol" data-symbol="\neq">Not Equal</button>
+                        <button class="btn-math-symbol" data-symbol="\leq">Less Equal</button>
+                        <button class="btn-math-symbol" data-symbol="\geq">Greater Equal</button>
+                    </div>
+                    <div class="math-instructions">
+                        <p><strong>Math Formatting Tips:</strong></p>
+                        <ul>
+                            <li>Use ^ for exponents: x^{2} for x²</li>
+                            <li>Use _ for subscripts: x_{n} for xₙ</li>
+                            <li>Group complex expressions with {}: x^{2y+3}</li>
+                            <li>Always enclose math expressions with $$...$$</li>
+                        </ul>
+                    </div>
+                    <label>Math Preview:</label>
+                    <div class="math-preview" id="question-preview"></div>
+                </div>
+                <div>
+                    <label for="question-marks">Marks: <input type="number" id="question-marks" min="1" value="1" class="marks-input"></label>
+                </div>
+                <div id="multiple-choice-options" class="question-type-fields multiple-choice-options">
+                    <div>
+                        <label for="option1">Option 1:</label>
+                        <input type="text" id="option1" placeholder="Enter option 1">
+                    </div>
+                    <div>
+                        <label for="option2">Option 2:</label>
+                        <input type="text" id="option2" placeholder="Enter option 2">
+                    </div>
+                    <div>
+                        <label for="option3">Option 3:</label>
+                        <input type="text" id="option3" placeholder="Enter option 3">
+                    </div>
+                    <div>
+                        <label for="option4">Option 4:</label>
+                        <input type="text" id="option4" placeholder="Enter option 4">
+                    </div>
+                    <div>
+                        <label for="correct-mc-answer">Correct Answer:</label>
+                        <select id="correct-mc-answer">
+                            <option value="option1">Option 1</option>
+                            <option value="option2">Option 2</option>
+                            <option value="option3">Option 3</option>
+                            <option value="option4">Option 4</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="true-false-options" class="question-type-fields true-false-options hidden">
+                    <div>
+                        <label for="correct-tf-answer">Correct Answer:</label>
+                        <select id="correct-tf-answer">
+                            <option value="true">True</option>
+                            <option value="false">False</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="fill-blank-options" class="question-type-fields fill-blank-options hidden">
+                    <div>
+                        <label for="blank-answer">Correct Answer:</label>
+                        <input type="text" id="blank-answer" placeholder="Enter correct answer">
+                        <div class="math-toolbar">
+                            <button class="btn-math-symbol-blank" data-symbol="\frac{a}{b}">Fraction</button>
+                            <button class="btn-math-symbol-blank" data-symbol="\sqrt{x}">Square Root</button>
+                            <button class="btn-math-symbol-blank" data-symbol="x^{}">Exponent</button>
+                            <button class="btn-math-symbol-blank" data-symbol="\pi">Pi</button>
+                        </div>
+                        <div class="math-preview" id="answer-preview"></div>
+                    </div>
+                </div>
+                <button id="save-question">Save Question</button>
+                <button id="update-question" class="hidden">Update Question</button>
+                <input type="hidden" id="edit-question-id">
+            </div>
+            <div id="question-list" class="tab-content hidden">
+                <h3>Question List</h3>
+                <div id="questions-container"></div>
+            </div>
+            <div id="quiz-settings" class="tab-content hidden">
+                <h3>Quiz Settings</h3>
+                <div>
+                    <label for="quiz-time-limit">Time Limit (minutes):</label>
+                    <input type="number" id="quiz-time-limit" min="1" value="30">
+                </div>
+                <div>
+                    <label for="quiz-passing-score">Passing Score (%):</label>
+                    <input type="number" id="quiz-passing-score" min="1" max="100" value="60">
+                </div>
+                <button id="save-quiz-settings">Save Settings</button>
+                <div id="quiz-settings-message"></div>
+            </div>
+        </div>
+        
+        <div id="student-panel" class="student-panel">
+            <h2>Student Panel</h2>
+            <button id="logout-student">Logout</button>
+            <div id="quiz-intro" class="quiz-info">
+                <h3>Quiz Instructions</h3>
+                <p id="quiz-summary">This quiz contains <span id="question-count">0</span> questions.</p>
+                <p>Time limit: <span id="time-limit-display">0</span> minutes</p>
+                <p>Passing score: <span id="passing-score-display">60</span>%</p>
+                <button id="start-quiz-btn" class="start-quiz">Start Quiz</button>
+            </div>
+            <div id="quiz-active-area" class="hidden">
+                <div class="quiz-timer" id="quiz-timer">Time remaining: --:--</div>
+                <div id="quiz-container">
+                    <div id="student-questions-container"></div>
+                </div>
+                <button id="submit-quiz">Submit Quiz</button>
+                <div id="quiz-results" class="quiz-results hidden">
+                    <h3>Quiz Results</h3>
+                    <p id="score-display"></p>
+                    <p id="time-taken"></p>
+                    <p id="pass-fail"></p>
+                    <div id="detailed-results"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="notification" id="time-up-notification">
+        Time's up! Your quiz will be automatically submitted.
+    </div>
+   
+    <script>
+        let users = [
+            { username: 'teacher', password: 'teacher123', role: 'teacher' },
+            { username: 'student', password: 'student123', role: 'student' }
+        ];
+        let questions = [];
+        let currentUser = null;
+        let quizSettings = {
+            timeLimit: 30, // in minutes
+            passingScore: 60 // in percentage
+        };
+        let quizTimer = null;
+        let quizStartTime = null;
+        let quizSubmitted = false;
+        let timeUpNotificationShown = false;
+
+        
+        const loginContainer = document.getElementById('login-container');
+        const teacherPanel = document.getElementById('teacher-panel');
+        const studentPanel = document.getElementById('student-panel');
+        const loginBtn = document.getElementById('login-btn');
+        const loginMessage = document.getElementById('login-message');
+        const logoutTeacherBtn = document.getElementById('logout-teacher');
+        const logoutStudentBtn = document.getElementById('logout-student');
+        const saveQuestionBtn = document.getElementById('save-question');
+        const updateQuestionBtn = document.getElementById('update-question');
+        const questionsContainer = document.getElementById('questions-container');
+        const studentQuestionsContainer = document.getElementById('student-questions-container');
+        const questionTypeSelect = document.getElementById('question-type');
+        const multipleChoiceOptions = document.getElementById('multiple-choice-options');
+        const trueFalseOptions = document.getElementById('true-false-options');
+        const fillBlankOptions = document.getElementById('fill-blank-options');
+        const tabAddQuestion = document.getElementById('tab-add-question');
+        const tabQuestionList = document.getElementById('tab-question-list');
+        const tabQuizSettings = document.getElementById('tab-quiz-settings');
+        const addQuestionForm = document.getElementById('add-question-form');
+        const questionList = document.getElementById('question-list');
+        const quizSettingsTab = document.getElementById('quiz-settings');
+        const questionText = document.getElementById('question-text');
+        const questionPreview = document.getElementById('question-preview');
+        const answerPreview = document.getElementById('answer-preview');
+        const quizTimeLimitInput = document.getElementById('quiz-time-limit');
+        const quizPassingScoreInput = document.getElementById('quiz-passing-score');
+        const saveQuizSettingsBtn = document.getElementById('save-quiz-settings');
+        const quizSettingsMessage = document.getElementById('quiz-settings-message');
+        const quizTimerElement = document.getElementById('quiz-timer');
+        const submitQuizBtn = document.getElementById('submit-quiz');
+        const quizResults = document.getElementById('quiz-results');
+        const scoreDisplay = document.getElementById('score-display');
+        const timeTakenDisplay = document.getElementById('time-taken');
+        const passFailDisplay = document.getElementById('pass-fail');
+        const detailedResults = document.getElementById('detailed-results');
+        const quizIntro = document.getElementById('quiz-intro');
+        const quizActiveArea = document.getElementById('quiz-active-area');
+        const startQuizBtn = document.getElementById('start-quiz-btn');
+        const questionCountDisplay = document.getElementById('question-count');
+        const timeLimitDisplay = document.getElementById('time-limit-display');
+        const passingScoreDisplay = document.getElementById('passing-score-display');
+        const timeUpNotification = document.getElementById('time-up-notification');
+
+        loginBtn.addEventListener('click', handleLogin);
+        logoutTeacherBtn.addEventListener('click', logout);
+        logoutStudentBtn.addEventListener('click', logout);
+        tabAddQuestion.addEventListener('click', showAddQuestionTab);
+        tabQuestionList.addEventListener('click', showQuestionListTab);
+        tabQuizSettings.addEventListener('click', showQuizSettingsTab);
+        questionTypeSelect.addEventListener('change', handleQuestionTypeChange);
+        saveQuestionBtn.addEventListener('click', saveQuestion);
+        updateQuestionBtn.addEventListener('click', updateQuestion);
+        saveQuizSettingsBtn.addEventListener('click', saveQuizSettings);
+        submitQuizBtn.addEventListener('click', submitQuiz);
+        startQuizBtn.addEventListener('click', startQuiz);
+
+        document.querySelectorAll('.btn-math-symbol').forEach(btn => {
+            btn.addEventListener('click', function() {
+                insertMathSymbol(this.getAttribute('data-symbol'), questionText);
+            });
+        });
+
+        document.querySelectorAll('.btn-math-symbol-blank').forEach(btn => {
+            btn.addEventListener('click', function() {
+                insertMathSymbol(this.getAttribute('data-symbol'), document.getElementById('blank-answer'));
+            });
+        });
+
+        
+        questionText.addEventListener('input', updateMathPreview);
+        document.getElementById('blank-answer').addEventListener('input', updateAnswerPreview);
+
+// Functions
+        function handleLogin() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const role = document.getElementById('role').value;
+            const user = users.find(u => u.username === username && u.password === password && u.role === role);
+            
+            if (user) {
+                currentUser = user;
+                loginContainer.classList.remove('active');
+                loginMessage.textContent = '';
+                
+                if (user.role === 'teacher') {
+                    teacherPanel.classList.add('active');
+                    loadTeacherQuestions();
+                    loadQuizSettings();
+                } else {
+                    studentPanel.classList.add('active');
+                    loadStudentQuizIntro();
+                }
+            } else {
+                loginMessage.textContent = 'Invalid username, password, or role!';
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            teacherPanel.classList.remove('active');
+            studentPanel.classList.remove('active');
+            loginContainer.classList.add('active');
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            clearInterval(quizTimer);
+            quizTimer = null;
+        }
+
+        function showAddQuestionTab() {
+            tabAddQuestion.classList.add('active');
+            tabQuestionList.classList.remove('active');
+            tabQuizSettings.classList.remove('active');
+            addQuestionForm.classList.add('active');
+            questionList.classList.remove('active');
+            quizSettingsTab.classList.remove('active');
+        }
+
+        function showQuestionListTab() {
+            tabQuestionList.classList.add('active');
+            tabAddQuestion.classList.remove('active');
+            tabQuizSettings.classList.remove('active');
+            questionList.classList.add('active');
+            addQuestionForm.classList.remove('active');
+            quizSettingsTab.classList.remove('active');
+            loadTeacherQuestions();
+        }
+
+        function showQuizSettingsTab() {
+            tabQuizSettings.classList.add('active');
+            tabAddQuestion.classList.remove('active');
+            tabQuestionList.classList.remove('active');
+            quizSettingsTab.classList.add('active');
+            addQuestionForm.classList.remove('active');
+            questionList.classList.remove('active');
+        }
+
+        function handleQuestionTypeChange() {
+            const selectedType = questionTypeSelect.value;
+            multipleChoiceOptions.classList.add('hidden');
+            trueFalseOptions.classList.add('hidden');
+            fillBlankOptions.classList.add('hidden');
+            
+            if (selectedType === 'multiple-choice') {
+                multipleChoiceOptions.classList.remove('hidden');
+            } else if (selectedType === 'true-false') {
+                trueFalseOptions.classList.remove('hidden');
+            } else if (selectedType === 'fill-blank') {
+                fillBlankOptions.classList.remove('hidden');
+            }
+        }
+
+        function insertMathSymbol(symbol, textarea) {
+            const startPos = textarea.selectionStart;
+            const endPos = textarea.selectionEnd;
+            const beforeText = textarea.value.substring(0, startPos);
+            const afterText = textarea.value.substring(endPos);
+            
+            textarea.value = beforeText + '$$' + symbol + '$$' + afterText;
+            
+            if (symbol.includes('^{}')) {
+                const newCursorPos = startPos + symbol.indexOf('^{}') + 3;
+                textarea.setSelectionRange(newCursorPos, newCursorPos);
+            } else if (symbol.includes('_{}')) {
+                const newCursorPos = startPos + symbol.indexOf('_{}') + 3;
+                textarea.setSelectionRange(newCursorPos, newCursorPos);
+            }
+            
+            if (textarea === questionText) {
+                updateMathPreview();
+            } else {
+                updateAnswerPreview();
+            }
+            
+            textarea.focus();
+        }
+
+        function updateMathPreview() {
+            questionPreview.innerHTML = questionText.value;
+            MathJax.typesetPromise([questionPreview]);
+        }
+
+        function updateAnswerPreview() {
+            const blankAnswer = document.getElementById('blank-answer');
+            answerPreview.innerHTML = blankAnswer.value;
+            MathJax.typesetPromise([answerPreview]);
+        }
+
+        function saveQuestion() {
+            const questionType = questionTypeSelect.value;
+            const questionTextValue = questionText.value;
+            const questionMarks = parseInt(document.getElementById('question-marks').value) || 1;
+            
+            if (!questionTextValue) {
+                alert('Please enter a question!');
+                return;
+            }
+            
+            let newQuestion = {
+                id: Date.now().toString(),
+                text: questionTextValue,
+                type: questionType,
+                marks: questionMarks
+            };
+            
+            if (questionType === 'multiple-choice') {
+                const option1 = document.getElementById('option1').value;
+                const option2 = document.getElementById('option2').value;
+                const option3 = document.getElementById('option3').value;
+                const option4 = document.getElementById('option4').value;
+                const correctAnswer = document.getElementById('correct-mc-answer').value;
+                
+                if (!option1 || !option2 || !option3 || !option4) {
+                    alert('Please fill in all options!');
+                    return;
+                }
+                
+                newQuestion.options = {
+                    option1: option1,
+                    option2: option2,
+                    option3: option3,
+                    option4: option4
+                };
+                newQuestion.correctAnswer = correctAnswer;
+            } else if (questionType === 'true-false') {
+                const correctAnswer = document.getElementById('correct-tf-answer').value;
+                newQuestion.correctAnswer = correctAnswer;
+            } else if (questionType === 'fill-blank') {
+                const blankAnswer = document.getElementById('blank-answer').value;
+                if (!blankAnswer) {
+                    alert('Please enter the correct answer!');
+                    return;
+                }
+                newQuestion.correctAnswer = blankAnswer;
+            }
+            
+            questions.push(newQuestion);
+            saveQuestions();
+            clearQuestionForm();
+            loadTeacherQuestions();
+            alert('Question saved successfully!');
+        }
+
+        function updateQuestion() {
+            const questionId = document.getElementById('edit-question-id').value;
+            const questionType = questionTypeSelect.value;
+            const questionTextValue = questionText.value;
+            const questionMarks = parseInt(document.getElementById('question-marks').value) || 1;
+            
+            if (!questionTextValue) {
+                alert('Please enter a question!');
+                return;
+            }
+            
+            let updatedQuestion = {
+                id: questionId,
+                text: questionTextValue,
+                type: questionType,
+                marks: questionMarks
+            };
+            
+            if (questionType === 'multiple-choice') {
+                const option1 = document.getElementById('option1').value;
+                const option2 = document.getElementById('option2').value;
+                const option3 = document.getElementById('option3').value;
+                const option4 = document.getElementById('option4').value;
+                const correctAnswer = document.getElementById('correct-mc-answer').value;
+                
+                if (!option1 || !option2 || !option3 || !option4) {
+                    alert('Please fill in all options!');
+                    return;
+                }
+                
+                updatedQuestion.options = {
+                    option1: option1,
+                    option2: option2,
+                    option3: option3,
+                    option4: option4
+                };
+                updatedQuestion.correctAnswer = correctAnswer;
+            } else if (questionType === 'true-false') {
+                const correctAnswer = document.getElementById('correct-tf-answer').value;
+                updatedQuestion.correctAnswer = correctAnswer;
+            } else if (questionType === 'fill-blank') {
+                const blankAnswer = document.getElementById('blank-answer').value;
+                if (!blankAnswer) {
+                    alert('Please enter the correct answer!');
+                    return;
+                }
+                updatedQuestion.correctAnswer = blankAnswer;
+            }
+            
+            const questionIndex = questions.findIndex(q => q.id === questionId);
+            if (questionIndex !== -1) {
+                questions[questionIndex] = updatedQuestion;
+                saveQuestions();
+                clearQuestionForm();
+                showSaveButton();
+                loadTeacherQuestions();
+                alert('Question updated successfully!');
+            }
+        }
+
+        function clearQuestionForm() {
+            document.getElementById('question-text').value = '';
+            document.getElementById('question-marks').value = '1';
+            document.getElementById('option1').value = '';
+            document.getElementById('option2').value = '';
+            document.getElementById('option3').value = '';
+            document.getElementById('option4').value = '';
+            document.getElementById('correct-mc-answer').value = 'option1';
+            document.getElementById('correct-tf-answer').value = 'true';
+            document.getElementById('blank-answer').value = '';
+            questionPreview.innerHTML = '';
+            answerPreview.innerHTML = '';
+            questionTypeSelect.value = 'multiple-choice';
+            multipleChoiceOptions.classList.remove('hidden');
+            trueFalseOptions.classList.add('hidden');
+            fillBlankOptions.classList.add('hidden');
+        }
+
+        function showSaveButton() {
+            saveQuestionBtn.classList.remove('hidden');
+            updateQuestionBtn.classList.add('hidden');
+        }
+
+        function showUpdateButton() {
+            saveQuestionBtn.classList.add('hidden');
+            updateQuestionBtn.classList.remove('hidden');
+        }
+
+        function loadQuestions() {
+            const savedQuestions = localStorage.getItem('questions');
+            if (savedQuestions) {
+                questions = JSON.parse(savedQuestions);
+                questions = questions.filter(q => q && q.text && q.type);
+            } else {
+                questions = [];
+            }
+            
+            const savedSettings = localStorage.getItem('quizSettings');
+            if (savedSettings) {
+                quizSettings = JSON.parse(savedSettings);
+            }
+        }
+
+        function saveQuestions() {
+            localStorage.setItem('questions', JSON.stringify(questions));
+        }
+
+        function loadQuizSettings() {
+            quizTimeLimitInput.value = quizSettings.timeLimit;
+            quizPassingScoreInput.value = quizSettings.passingScore;
+        }
+
+        function saveQuizSettings() {
+            quizSettings.timeLimit = parseInt(quizTimeLimitInput.value) || 30;
+            quizSettings.passingScore = parseInt(quizPassingScoreInput.value) || 60;
+            localStorage.setItem('quizSettings', JSON.stringify(quizSettings));
+            quizSettingsMessage.textContent = 'Settings saved successfully!';
+            setTimeout(() => {
+                quizSettingsMessage.textContent = '';
+            }, 3000);
+        }
+
+        function loadTeacherQuestions() {
+            questionsContainer.innerHTML = '';
+            const validQuestions = questions.filter(q => q && q.text && q.type);
+
+            if (validQuestions.length === 0) {
+                questionsContainer.innerHTML = '<p>No questions added yet.</p>';
+                return;
+            }
+
+            validQuestions.forEach(question => {
+                const questionElement = document.createElement('div');
+                questionElement.className = 'question-item';
+                let content = `<p><strong>Question Type:</strong> ${formatQuestionType(question.type)}</p>
+                               <p><strong>Question:</strong> ${question.text}</p>
+                               <p><strong>Marks:</strong> ${question.marks}</p>`;
+
+                if (question.type === 'multiple-choice') {
+                    content += `
+                        <p><strong>Option 1:</strong> ${question.options.option1}</p>
+                        <p><strong>Option 2:</strong> ${question.options.option2}</p>
+                        <p><strong>Option 3:</strong> ${question.options.option3}</p>
+                        <p><strong>Option 4:</strong> ${question.options.option4}</p>
+                        <p><strong>Correct Answer:</strong> ${question.options[question.correctAnswer]}</p>
+                    `;
+                } else if (question.type === 'true-false') {
+                    content += `<p><strong>Correct Answer:</strong> ${question.correctAnswer}</p>`;
+                } else if (question.type === 'fill-blank') {
+                    content += `<p><strong>Correct Answer:</strong> ${question.correctAnswer}</p>`;
+                }
+
+                content += `
+                    <div class="question-actions">
+                        <button class="edit" data-id="${question.id}">Edit</button>
+                        <button class="delete" data-id="${question.id}">Delete</button>
+                    </div>
+                `;
+                questionElement.innerHTML = content;
+                questionsContainer.appendChild(questionElement);
+            });
+
+            document.querySelectorAll('.edit').forEach(button => {
+                button.addEventListener('click', editQuestion);
+            });
+
+            document.querySelectorAll('.delete').forEach(button => {
+                button.addEventListener('click', deleteQuestion);
+            });
+
+            MathJax.typesetPromise([questionsContainer]);
+        }
+
+        function formatQuestionType(type) {
+            const types = {
+                'multiple-choice': 'Multiple Choice',
+                'true-false': 'True/False',
+                'fill-blank': 'Fill in the Blank'
+            };
+            return types[type] || type;
+        }
+
+        function editQuestion(event) {
+            const questionId = event.target.getAttribute('data-id');
+            const question = questions.find(q => q.id === questionId);
+            if (question) {
+                document.getElementById('question-text').value = question.text;
+                document.getElementById('question-marks').value = question.marks;
+                document.getElementById('question-type').value = question.type;
+                document.getElementById('edit-question-id').value = question.id;
+                
+                const event = new Event('change');
+                questionTypeSelect.dispatchEvent(event);
+                
+                if (question.type === 'multiple-choice') {
+                    document.getElementById('option1').value = question.options.option1;
+                    document.getElementById('option2').value = question.options.option2;
+                    document.getElementById('option3').value = question.options.option3;
+                    document.getElementById('option4').value = question.options.option4;
+                    document.getElementById('correct-mc-answer').value = question.correctAnswer;
+                } else if (question.type === 'true-false') {
+                    document.getElementById('correct-tf-answer').value = question.correctAnswer;
+                } else if (question.type === 'fill-blank') {
+                    document.getElementById('blank-answer').value = question.correctAnswer;
+                }
+                
+                updateMathPreview();
+                if (question.type === 'fill-blank') {
+                    updateAnswerPreview();
+                }
+                
+                showUpdateButton();
+                tabAddQuestion.click();
+            }
+        }
+
+        function deleteQuestion(event) {
+            const questionId = event.target.getAttribute('data-id');
+            if (confirm('Are you sure you want to delete this question?')) {
+                questions = questions.filter(q => q.id !== questionId);
+                saveQuestions();
+                loadTeacherQuestions();
+            }
+        }
+
+        function loadStudentQuizIntro() {
+            questionCountDisplay.textContent = questions.length;
+            timeLimitDisplay.textContent = quizSettings.timeLimit;
+            passingScoreDisplay.textContent = quizSettings.passingScore;
+            
+            quizIntro.classList.remove('hidden');
+            quizActiveArea.classList.add('hidden');
+            quizResults.classList.add('hidden');
+        }
+
+        function startQuiz() {
+            quizIntro.classList.add('hidden');
+            quizActiveArea.classList.remove('hidden');
+            
+            studentQuestionsContainer.innerHTML = '';
+            quizResults.classList.add('hidden');
+            quizSubmitted = false;
+            timeUpNotificationShown = false;
+            
+            if (questions.length === 0) {
+                studentQuestionsContainer.innerHTML = '<p>No questions available.</p>';
+                submitQuizBtn.classList.add('hidden');
+                return;
+            }
+            
+            //------------------------------ Start the quiz timer
+            quizStartTime = new Date();
+            startQuizTimer();
+            
+            questions.forEach((question, index) => {
+                const questionElement = document.createElement('div');
+                questionElement.className = 'question-item';
+                questionElement.id = `question-${question.id}`;
+                
+                let content = `<p><strong>Question ${index + 1}:</strong> ${question.text} <span class="marks-label">(${question.marks} mark${question.marks !== 1 ? 's' : ''})</span></p>`;
+                
+                if (question.type === 'multiple-choice') {
+                    content += `
+                        <div>
+                            <input type="radio" name="q${question.id}" value="option1" id="q${question.id}o1">
+                            <label for="q${question.id}o1">${question.options.option1}</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="q${question.id}" value="option2" id="q${question.id}o2">
+                            <label for="q${question.id}o2">${question.options.option2}</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="q${question.id}" value="option3" id="q${question.id}o3">
+                            <label for="q${question.id}o3">${question.options.option3}</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="q${question.id}" value="option4" id="q${question.id}o4">
+                            <label for="q${question.id}o4">${question.options.option4}</label>
+                        </div>
+                    `;
+                } else if (question.type === 'true-false') {
+                    content += `
+                        <div>
+                            <input type="radio" name="q${question.id}" value="true" id="q${question.id}true">
+                            <label for="q${question.id}true">True</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="q${question.id}" value="false" id="q${question.id}false">
+                            <label for="q${question.id}false">False</label>
+                        </div>
+                    `;
+                } else if (question.type === 'fill-blank') {
+                    content += `
+                        <div>
+                            <input type="text" id="q${question.id}blank" placeholder="Your answer">
+                        </div>
+                    `;
+                }
+                
+                questionElement.innerHTML = content;
+                studentQuestionsContainer.appendChild(questionElement);
+            });
+            
+            MathJax.typesetPromise([studentQuestionsContainer]);
+        }
+
+        function startQuizTimer() {
+    clearInterval(quizTimer);
+    const timeLimitMs = quizSettings.timeLimit * 60 * 1000;
+    
+    quizTimer = setInterval(() => {
+        const now = new Date();
+        const elapsedMs = now - quizStartTime;
+        const remainingMs = Math.max(0, timeLimitMs - elapsedMs);
+        
+        if (remainingMs <= 0) {
+            clearInterval(quizTimer);
+            if (!timeUpNotificationShown) {
+                showTimeUpNotification();
+                timeUpNotificationShown = true;
+            }
+            submitQuiz();
+            return;
+        }
+        
+        const minutes = Math.floor(remainingMs / 60000);
+        const seconds = Math.floor((remainingMs % 60000) / 1000);
+        quizTimerElement.textContent = `Time remaining: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    }, 1000);
+}
+
+function showTimeUpNotification() {
+    timeUpNotification.style.display = 'block';
+    setTimeout(() => {
+        timeUpNotification.style.display = 'none';
+    }, 5000);
+}
+
+function submitQuiz() {
+    if (quizSubmitted) return;
+    quizSubmitted = true;
+    clearInterval(quizTimer);
+    
+    const endTime = new Date();
+    const timeTakenMs = endTime - quizStartTime;
+    const minutes = Math.floor(timeTakenMs / 60000);
+    const seconds = Math.floor((timeTakenMs % 60000) / 1000);
+    const timeTakenStr = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    
+    let totalMarks = 0;
+    let obtainedMarks = 0;
+    let results = [];
+    
+    questions.forEach(question => {
+        totalMarks += question.marks;
+        let userAnswer = '';
+        let isCorrect = false;
+        
+        if (question.type === 'multiple-choice') {
+            const selectedOption = document.querySelector(`input[name="q${question.id}"]:checked`);
+            userAnswer = selectedOption ? selectedOption.value : '';
+            isCorrect = userAnswer === question.correctAnswer;
+        } else if (question.type === 'true-false') {
+            const selectedOption = document.querySelector(`input[name="q${question.id}"]:checked`);
+            userAnswer = selectedOption ? selectedOption.value : '';
+            isCorrect = userAnswer === question.correctAnswer;
+        } else if (question.type === 'fill-blank') {
+            userAnswer = document.getElementById(`q${question.id}blank`).value.trim();
+            isCorrect = userAnswer === question.correctAnswer;
+        }
+        
+        if (isCorrect) {
+            obtainedMarks += question.marks;
+        }
+        
+        results.push({
+            question: question.text,
+            userAnswer: userAnswer || 'No answer provided',
+            correctAnswer: question.type === 'multiple-choice' ? question.options[question.correctAnswer] : question.correctAnswer,
+            isCorrect: isCorrect,
+            marks: question.marks,
+            obtained: isCorrect ? question.marks : 0
+        });
+    });
+    
+    const percentage = Math.round((obtainedMarks / totalMarks) * 100);
+    const passed = percentage >= quizSettings.passingScore;
+    
+    // Display results
+    scoreDisplay.textContent = `Your score: ${obtainedMarks}/${totalMarks} (${percentage}%)`;
+    timeTakenDisplay.textContent = `Time taken: ${timeTakenStr}`;
+    passFailDisplay.textContent = `Result: ${passed ? 'PASSED' : 'FAILED'}`;
+    passFailDisplay.style.color = passed ? 'green' : 'red';
+    
+    // Detailed results
+    detailedResults.innerHTML = '<h4>Detailed Results:</h4>';
+    results.forEach((result, index) => {
+        const resultElement = document.createElement('div');
+        resultElement.className = `feedback ${result.isCorrect ? 'correct' : 'incorrect'}`;
+        resultElement.innerHTML = `
+            <p><strong>Question ${index + 1}:</strong> ${result.question}</p>
+            <p>Your answer: ${result.userAnswer}</p>
+            <p>Correct answer: ${result.correctAnswer}</p>
+            <p>Marks: ${result.obtained}/${result.marks}</p>
+        `;
+        detailedResults.appendChild(resultElement);
+    });
+    
+    quizResults.classList.remove('hidden');
+    submitQuizBtn.classList.add('hidden');
+}
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    loadQuestions();
+});
+
+window.addEventListener('load', () => {
+    MathJax.typeset();
+});
+</script>
+</body>
+</html>
